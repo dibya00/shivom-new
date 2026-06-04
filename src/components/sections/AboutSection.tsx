@@ -1,4 +1,5 @@
 'use client';
+
 import { motion } from 'framer-motion';
 import { fadeUp, staggerContainer, slideInRight } from '@/lib/animations';
 import { Button } from '../ui/Button';
@@ -14,81 +15,138 @@ export function AboutSection() {
   const title = aboutData?.title || 'Engineering the Future of Infrastructure & Energy.';
   const description = aboutData?.description || 'As a premier Odisha-based conglomerate, Shivom Group executes large-scale government and utility projects across power distribution, renewable energy, and civil infrastructure.';
   
-  // Resolve image dynamically with whitelisted fallback
+  // Resolve main image dynamically with dynamic CMS value and whitelisted fallback
   const mainImage = resolveImageUrl(
     aboutData?.image, 
-    'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1000'
+    'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1000'
   );
   
-  // Secondary image fallback
-  const secondaryImage = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800';
-
-  const statValue = aboutData?.stats?.[0]?.value || '20+';
-  const statLabel = aboutData?.stats?.[0]?.label || 'Years of Excellence';
+  // High-value division image overrides for Solar & Concrete
+  const solarImage = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=600';
+  const concreteImage = 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600';
 
   return (
-    <section className="py-24 bg-white overflow-hidden">
+    <section className="py-24 bg-white overflow-hidden border-t border-gray-50">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           
-          {/* Text Content */}
+          {/* Left Column: Structured Brand Copy (7 Columns) */}
           <motion.div 
-            className="lg:w-1/2"
+            className="lg:col-span-7 space-y-6"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.span variants={fadeUp} className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-4 block">
-              About Shivom Group
-            </motion.span>
-            <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-bold text-brand-navy leading-tight mb-6">
+            {/* Subtitle Tag with Indicator */}
+            <motion.div variants={fadeUp} className="flex items-center gap-2">
+              <span className="w-8 h-[2px] bg-brand-orange rounded-full" />
+              <span className="text-brand-orange font-bold tracking-widest uppercase text-xs">
+                About Shivom Group
+              </span>
+            </motion.div>
+
+            {/* Dynamic Headline */}
+            <motion.h2 
+              variants={fadeUp} 
+              className="text-4xl md:text-5xl lg:text-6xl font-black text-brand-navy leading-tight tracking-tight"
+            >
               {title}
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-gray-600 text-lg leading-relaxed mb-6">
-              {description}
-            </motion.p>
-            <motion.p variants={fadeUp} className="text-gray-600 text-lg leading-relaxed mb-8">
-              We leverage our extensive manufacturing strength—including 500+ PSC poles daily capacity—and highly skilled workforce to deliver sustainable solutions that power Odisha&apos;s growth.
-            </motion.p>
+
+            {/* Description Block */}
+            <div className="space-y-4">
+              <motion.p variants={fadeUp} className="text-gray-600 text-lg leading-relaxed">
+                {description}
+              </motion.p>
+              <motion.p variants={fadeUp} className="text-gray-600 text-lg leading-relaxed">
+                We leverage our extensive manufacturing strength—including 500+ PSC poles daily capacity—and highly skilled workforce to deliver sustainable solutions that power Odisha&apos;s growth.
+              </motion.p>
+            </div>
+
+            {/* Structured Mini-Metrics Grid */}
+            <motion.div 
+              variants={fadeUp}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-6 border-y border-gray-100"
+            >
+              <div className="flex flex-col">
+                <span className="text-3xl font-extrabold text-brand-orange mb-1">
+                  20+ Years
+                </span>
+                <span className="text-sm font-bold text-brand-navy uppercase tracking-wider">
+                  Of Engineering Excellence
+                </span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-3xl font-extrabold text-brand-blue mb-1">
+                  500+ Poles
+                </span>
+                <span className="text-sm font-bold text-brand-navy uppercase tracking-wider">
+                  Daily PSC Pole Production
+                </span>
+              </div>
+            </motion.div>
             
-            <motion.div variants={fadeUp} className="flex gap-4">
+            {/* Dual Button CTA */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
               <Link href="/about">
-                <Button size="lg">{aboutData?.buttonText || 'Discover Our History'}</Button>
+                <Button size="lg" variant="primary">
+                  {aboutData?.buttonText || 'Discover Our History'}
+                </Button>
+              </Link>
+              <Link href="/projects">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-brand-navy text-brand-navy hover:bg-brand-navy hover:text-white"
+                >
+                  Explore Our Projects
+                </Button>
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* Image Collage */}
+          {/* Right Column: Layered 3-Image Collage (5 Columns) */}
           <motion.div 
-            className="lg:w-1/2 relative h-[600px] w-full"
+            className="lg:col-span-5 relative h-[550px] w-full"
             variants={slideInRight}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <div className="absolute top-0 right-0 w-4/5 h-4/5 rounded-2xl overflow-hidden shadow-2xl relative">
+            {/* Main Primary Image: Power Infrastructure / EPC (80% W, 70% H) */}
+            <div className="absolute top-0 right-0 w-[82%] h-[72%] rounded-2xl overflow-hidden shadow-lg border border-gray-100">
               <Image 
                 src={mainImage} 
-                alt="Infrastructure Project" 
+                alt="Transmission and distribution tower execution" 
                 fill
-                className="object-cover"
+                priority
+                sizes="(max-width: 1024px) 80vw, 450px"
+                className="object-cover transition-transform duration-700 hover:scale-105"
               />
-              <div className="absolute inset-0 bg-brand-navy/20 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-brand-navy/10 mix-blend-multiply" />
             </div>
             
-            <div className="absolute bottom-0 left-0 w-3/5 h-2/5 rounded-2xl overflow-hidden shadow-2xl border-8 border-white relative">
+            {/* Secondary Overlapping Image: Solar Array (50% W, 42% H, bottom-left) */}
+            <div className="absolute bottom-6 left-0 w-[52%] h-[44%] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
               <Image 
-                src={secondaryImage} 
-                alt="Solar Installation" 
+                src={solarImage} 
+                alt="Solar plant installation" 
                 fill
-                className="object-cover"
+                sizes="(max-width: 1024px) 50vw, 280px"
+                className="object-cover transition-transform duration-700 hover:scale-105"
               />
             </div>
             
-            <div className="absolute bottom-1/4 -left-8 bg-white p-6 rounded-xl shadow-xl border border-gray-100 hidden md:block">
-              <div className="text-4xl font-bold text-brand-orange mb-1">{statValue}</div>
-              <div className="text-sm font-semibold text-brand-navy uppercase tracking-wider">{statLabel}</div>
+            {/* Tertiary Overlapping Image: Concrete / PSC (45% W, 38% H, bottom-right) */}
+            <div className="absolute bottom-0 right-4 w-[48%] h-[40%] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <Image 
+                src={concreteImage} 
+                alt="Concrete Pole manufacturing unit" 
+                fill
+                sizes="(max-width: 1024px) 45vw, 240px"
+                className="object-cover transition-transform duration-700 hover:scale-105"
+              />
             </div>
           </motion.div>
 
