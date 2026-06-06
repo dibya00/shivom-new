@@ -47,6 +47,7 @@ export default async function ProjectsPage() {
                       src={project.featuredImage || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'} 
                       alt={project.title}
                       fill
+                      loading="lazy"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute top-4 left-4 bg-brand-navy/90 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
@@ -61,7 +62,7 @@ export default async function ProjectsPage() {
                       </span>
                     )}
                     <h3 className="text-2xl font-bold text-brand-navy mb-4 leading-tight group-hover:text-brand-orange transition-colors">
-                      <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                      <Link prefetch={false} href={`/projects/${project.slug}`}>{project.title}</Link>
                     </h3>
                     <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
                       {project.shortDescription}
@@ -72,6 +73,7 @@ export default async function ProjectsPage() {
                         {project.clientName || 'Shivom Group'}
                       </span>
                       <Link 
+                        prefetch={false}
                         href={`/projects/${project.slug}`} 
                         className="w-10 h-10 rounded-full bg-brand-navy group-hover:bg-brand-orange text-white flex items-center justify-center transition-colors duration-300"
                       >

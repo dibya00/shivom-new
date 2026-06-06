@@ -50,7 +50,7 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-1">Email Inquiry</h4>
-                  <p className="text-gray-400">info@shivomgroup.com</p>
+                  <p className="text-gray-400">info@shivomgroup.in</p>
                 </div>
               </div>
             </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from './Button';
+import { cn } from '@/lib/utils/cn';
 import { motion, HTMLMotionProps } from 'framer-motion';
 
 export function Card({ className, children, ...props }: HTMLMotionProps<"div">) {

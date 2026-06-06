@@ -89,12 +89,12 @@ export function AboutSection() {
             
             {/* Dual Button CTA */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-4 pt-2">
-              <Link href="/about">
+              <Link prefetch={false} href="/about">
                 <Button size="lg" variant="primary">
                   {aboutData?.buttonText || 'Discover Our History'}
                 </Button>
               </Link>
-              <Link href="/projects">
+              <Link prefetch={false} href="/projects">
                 <Button 
                   size="lg" 
                   variant="outline" 
@@ -116,11 +116,10 @@ export function AboutSection() {
           >
             {/* Main Primary Image: Power Infrastructure / EPC (80% W, 70% H) */}
             <div className="absolute top-0 right-0 w-[82%] h-[72%] rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-              <Image 
-                src={mainImage} 
+              <Image src={mainImage} 
                 alt="Transmission and distribution tower execution" 
                 fill
-                priority
+                loading="lazy"
                 sizes="(max-width: 1024px) 80vw, 450px"
                 className="object-cover transition-transform duration-700 hover:scale-105"
               />
@@ -129,8 +128,7 @@ export function AboutSection() {
             
             {/* Secondary Overlapping Image: Solar Array (50% W, 42% H, bottom-left) */}
             <div className="absolute bottom-6 left-0 w-[52%] h-[44%] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-              <Image 
-                src={solarImage} 
+              <Image loading="lazy" src={solarImage} 
                 alt="Solar plant installation" 
                 fill
                 sizes="(max-width: 1024px) 50vw, 280px"
@@ -140,8 +138,7 @@ export function AboutSection() {
             
             {/* Tertiary Overlapping Image: Concrete / PSC (45% W, 38% H, bottom-right) */}
             <div className="absolute bottom-0 right-4 w-[48%] h-[40%] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-              <Image 
-                src={concreteImage} 
+              <Image loading="lazy" src={concreteImage} 
                 alt="Concrete Pole manufacturing unit" 
                 fill
                 sizes="(max-width: 1024px) 45vw, 240px"

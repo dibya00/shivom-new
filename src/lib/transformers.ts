@@ -70,7 +70,7 @@ export const transformBlog = (data: Partial<IBlog>): IBlog => ({
   metaDescription: data.metaDescription || data.excerpt,
 });
 
-export const transformEvent = (data: any): IEvent => {
+export const transformEvent = (data: Partial<IEvent> & { image?: string; shortDescription?: string }): IEvent => {
   const defaultImg = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800';
   const imgUrl = data.featuredImage || data.image;
   const resolvedFeatured = resolveImageUrl(imgUrl, defaultImg);
@@ -119,18 +119,20 @@ export const transformTestimonial = (data: Partial<ITestimonial> & { clientName?
   order: data.order || 0,
 });
 
-export const transformTeam = (data: Partial<ITeam>): ITeam => ({
+export const transformTeam = (data: Partial<ITeam> & { department?: string; position?: string }): ITeam => ({
   _id: data._id || '',
   name: data.name || 'Team Member',
   designation: data.designation || 'Staff',
+  department: data.department || '',
+  position: data.position || '',
   bio: data.bio || '',
-  image: resolveImageUrl(data.image, 'https://dummyimage.com/150x150/ffffff/0072bc.png&text=Avatar'),
+  image: resolveImageUrl(data.image, 'https://dummyimage.com/180x180/ffffff/0b1f4d.png&text=Avatar'),
   linkedin: data.linkedin || '',
   twitter: data.twitter || '',
   order: data.order || 0,
 });
 
-export const transformCareer = (data: Partial<ICareer> & { jobTitle?: string; jobType?: string; status?: string }): ICareer => ({
+export const transformCareer = (data: Partial<ICareer> & { jobTitle?: string; jobType?: string; status?: string; createdAt?: string; division?: 'group' | 'enterprise' | 'solar' | 'concrete' }): ICareer => ({
   _id: data._id || '',
   title: data.jobTitle || data.title || 'Position Available',
   slug: data.slug || '',
@@ -142,6 +144,8 @@ export const transformCareer = (data: Partial<ICareer> & { jobTitle?: string; jo
   requirements: Array.isArray(data.requirements) ? data.requirements : [],
   responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities : [],
   isActive: data.status === 'active' || (data.isActive !== undefined ? data.isActive : true),
+  division: data.division,
+  createdAt: data.createdAt,
 });
 
 export const transformClient = (data: Partial<IClient> & { websiteUrl?: string }): IClient => ({

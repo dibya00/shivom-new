@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from './Button';
+import { cn } from '@/lib/utils/cn';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: string;
@@ -20,7 +20,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           )}
           {...props}
         />
-        {error && <span className="text-sm text-red-500 mt-1">{error}</span>}
+        {error && <span role="alert" className="text-sm text-red-500 mt-1">{error}</span>}
       </div>
     );
   }

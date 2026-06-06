@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { apiClient } from '../lib/api/axios';
 import { transformBlog } from '../lib/transformers';
 import { IBlog, ListResponse, SingleResponse } from '@/types';
@@ -5,23 +6,23 @@ import { IBlog, ListResponse, SingleResponse } from '@/types';
 const WEBSITE_KEY = 'group';
 
 export const blogsService = {
-  getBlogs: async (): Promise<IBlog[]> => {
+  getBlogs: cache(async (): Promise<IBlog[]> => {
     const response = await apiClient.get<ListResponse<IBlog>>(`/api/public/${WEBSITE_KEY}/blogs`);
     if (Array.isArray(response.data?.data)) {
       return response.data.data.map(transformBlog);
     }
     return [];
-  },
+  }),
   
-  getFeaturedBlogs: async (): Promise<IBlog[]> => {
+  getFeaturedBlogs: cache(async (): Promise<IBlog[]> => {
     const response = await apiClient.get<ListResponse<IBlog>>(`/api/public/${WEBSITE_KEY}/blogs/featured`);
     if (Array.isArray(response.data?.data)) {
       return response.data.data.map(transformBlog);
     }
     return [];
-  },
+  }),
 
-  getBlogBySlug: async (slug: string): Promise<IBlog | null> => {
+  getBlogBySlug: cache(async (slug: string): Promise<IBlog | null> => {
     try {
       const response = await apiClient.get<SingleResponse<IBlog>>(`/api/public/${WEBSITE_KEY}/blogs/${slug}`);
       if (response.data?.data) {
@@ -31,5 +32,5 @@ export const blogsService = {
     } catch {
       return null;
     }
-  }
+  })
 };

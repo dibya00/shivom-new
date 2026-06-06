@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
-import { cn, Button } from '../ui/Button';
+import { Button } from '../ui/Button';
+import { cn } from '@/lib/utils/cn';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,9 +30,12 @@ export function Header() {
 
   // Close menus on path changes
   useEffect(() => {
-    setMobileMenuOpen(false);
-    setMobileAboutOpen(false);
-    setMobileGroupOpen(false);
+    const timer = setTimeout(() => {
+      setMobileMenuOpen(false);
+      setMobileAboutOpen(false);
+      setMobileGroupOpen(false);
+    }, 0);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   const groupLinks = [

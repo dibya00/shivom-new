@@ -8,6 +8,17 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+export async function generateStaticParams() {
+  try {
+    const events = await eventsService.getEvents();
+    return events.map((event) => ({
+      slug: event.slug,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const event = await eventsService.getEventBySlug(resolvedParams.slug);
@@ -63,6 +74,7 @@ export default async function EventDetailPage({ params }: Props) {
               src={event.image} 
               alt={event.title} 
               fill 
+              loading="lazy"
               sizes="(max-width: 992px) 100vw, 850px"
               className="object-cover" 
             />

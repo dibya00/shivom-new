@@ -1,19 +1,31 @@
+import { Metadata } from 'next';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { TeamSection } from '@/components/sections/TeamSection';
+import { AboutClient } from '@/components/sections/AboutClient';
+import { homeService } from '@/services/home.service';
 
-export default function AboutPage() {
+export const metadata: Metadata = {
+  title: 'About Shivom Group | Engineering & Infrastructure Powerhouse in Odisha',
+  description: 'Learn about Shivom Group, a premier multi-disciplinary conglomerate in Odisha specializing in power transmission networks, solar EPC installations, PSC pole manufacturing, and civil engineering works.',
+  keywords: 'Shivom Group, About Us, Odisha Infrastructure, Power Electrification, Solar EPC Odisha, PSC Pole Manufacturing, Mr. Ambika Prasad Samal',
+};
+
+export default async function AboutPage() {
+  let aboutData = undefined;
+
+  try {
+    const homeData = await homeService.getHomeData();
+    aboutData = homeData?.data?.about;
+  } catch (error) {
+    console.error('Failed to fetch home/about details from CMS API:', error);
+  }
+
   return (
-    <>
+    <main className="min-h-screen">
+      <h1 className="sr-only">About Shivom Group - Company History, Leadership, and Infrastructure Services</h1>
       <PageBanner title="About Shivom Group" breadcrumb="About" />
-      <div className="container mx-auto px-4 py-24 text-center">
-        <h2 className="text-3xl font-bold mb-4">Our Vision & Mission</h2>
-        <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed mb-6">
-          A legacy of excellence in infrastructure, energy, and manufacturing. We aim to drive sustainable progress across communities by deploying state-of-the-art power grids and solar installations.
-        </p>
-      </div>
-      
-      {/* TeamSection integrates with React Query & CMS team data */}
+      <AboutClient aboutData={aboutData} />
       <TeamSection />
-    </>
+    </main>
   );
 }

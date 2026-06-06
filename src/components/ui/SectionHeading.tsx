@@ -1,4 +1,6 @@
-import { cn } from './Button';
+'use client';
+
+import { cn } from '@/lib/utils/cn';
 import { motion } from 'framer-motion';
 
 interface Props {

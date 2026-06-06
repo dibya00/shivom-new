@@ -3,6 +3,8 @@ import { Epilogue } from "next/font/google";
 import QueryProvider from "@/providers/QueryProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { FloatingContactButton } from "@/components/common/FloatingContactButton";
+import { InitialLoader } from "@/components/common/InitialLoader";
 import Script from "next/script";
 import "./globals.css";
 
@@ -25,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://shivomgroup.com/",
+    url: "https://shivomgroup.in/",
     siteName: "Shivom Group",
     title: "Shivom Group | Infrastructure, Renewable Energy & Manufacturing",
     description: "Delivering government-grade utility solutions across Odisha.",
@@ -58,8 +60,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Corporation",
     "name": "Shivom Group",
-    "url": "https://shivomgroup.com",
-    "logo": "https://shivomgroup.com/logo.png",
+    "url": "https://shivomgroup.in",
+    "logo": "https://shivomgroup.in/logo.png",
     "description": "Premier infrastructure, renewable energy, and PSC pole manufacturing enterprise in Odisha.",
     "address": {
       "@type": "PostalAddress",
@@ -74,6 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${epilogue.variable} antialiased scroll-smooth`}>
       <body className="min-h-screen flex flex-col font-sans">
+        <InitialLoader />
         {gaId && (
           <>
             <Script
@@ -99,6 +102,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <FloatingContactButton />
         </QueryProvider>
       </body>
     </html>

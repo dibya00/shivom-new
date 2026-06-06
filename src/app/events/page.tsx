@@ -53,6 +53,7 @@ export default async function EventsPage() {
                         src={event.image || 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'} 
                         alt={event.title}
                         fill
+                        loading="lazy"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
@@ -67,7 +68,7 @@ export default async function EventsPage() {
                       )}
 
                       <h3 className="text-2xl font-bold text-brand-navy mb-4 leading-tight group-hover:text-brand-orange transition-colors">
-                        <Link href={`/events/${event.slug}`}>{event.title}</Link>
+                        <Link prefetch={false} href={`/events/${event.slug}`}>{event.title}</Link>
                       </h3>
                       
                       <p className="text-gray-600 leading-relaxed mb-6 flex-grow line-clamp-3">
@@ -76,6 +77,7 @@ export default async function EventsPage() {
 
                       <div className="border-t border-gray-100 pt-6 mt-auto">
                         <Link 
+                          prefetch={false}
                           href={`/events/${event.slug}`} 
                           className="inline-flex items-center gap-2 text-brand-navy group-hover:text-brand-orange font-bold uppercase tracking-wider text-sm transition-colors"
                         >

@@ -123,6 +123,8 @@ export interface ITeam {
   _id: string;
   name: string;
   designation: string;
+  department?: string;
+  position?: string;
   bio?: string;
   image: string;
   linkedin?: string;
@@ -142,6 +144,8 @@ export interface ICareer {
   requirements: string[];
   responsibilities: string[];
   isActive: boolean;
+  division?: 'group' | 'enterprise' | 'solar' | 'concrete';
+  createdAt?: string;
 }
 
 export interface IClient {

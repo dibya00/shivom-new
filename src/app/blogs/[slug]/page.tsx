@@ -8,6 +8,17 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+export async function generateStaticParams() {
+  try {
+    const blogs = await blogsService.getBlogs();
+    return blogs.map((blog) => ({
+      slug: blog.slug,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const blog = await blogsService.getBlogBySlug(resolvedParams.slug);
@@ -50,12 +61,12 @@ export default async function BlogDetailPage({ params }: Props) {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://shivomgroup.com"
+      "item": "https://shivomgroup.in"
     },{
       "@type": "ListItem",
       "position": 2,
       "name": "Blogs",
-      "item": "https://shivomgroup.com/blogs"
+      "item": "https://shivomgroup.in/blogs"
     },{
       "@type": "ListItem",
       "position": 3,
@@ -76,7 +87,7 @@ export default async function BlogDetailPage({ params }: Props) {
         </div>
         {blog.featuredImage && (
           <div className="bg-gray-100 h-96 rounded-xl mb-12 flex items-center justify-center text-gray-400 overflow-hidden relative shadow-lg">
-            <Image src={blog.featuredImage} alt={blog.title} fill className="object-cover" />
+            <Image src={blog.featuredImage} alt={blog.title} fill loading="lazy" className="object-cover" />
           </div>
         )}
         <div className="prose prose-lg max-w-none text-gray-600">

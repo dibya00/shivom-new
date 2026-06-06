@@ -47,6 +47,7 @@ export default async function BlogsPage() {
                       src={blog.featuredImage || '/placeholder-blog.jpg'} 
                       alt={blog.title} 
                       fill
+                      loading="lazy"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-brand-navy uppercase tracking-wider shadow-sm">
@@ -63,7 +64,7 @@ export default async function BlogsPage() {
                   </div>
                   
                   <h3 className="text-2xl font-bold text-brand-navy mb-3 leading-snug group-hover:text-brand-orange transition-colors">
-                    <Link href={`/blogs/${blog.slug}`}>{blog.title}</Link>
+                    <Link prefetch={false} href={`/blogs/${blog.slug}`}>{blog.title}</Link>
                   </h3>
                   
                   <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
@@ -71,6 +72,7 @@ export default async function BlogsPage() {
                   </p>
                   
                   <Link 
+                    prefetch={false}
                     href={`/blogs/${blog.slug}`} 
                     className="inline-flex items-center gap-2 text-brand-orange font-bold uppercase tracking-wider text-sm mt-auto group-hover:gap-3 transition-all"
                   >

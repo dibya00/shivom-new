@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://shivomgroup.com';
+  const baseUrl = 'https://shivomgroup.in';
 
   return [
     {

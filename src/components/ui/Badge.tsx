@@ -1,4 +1,4 @@
-import { cn } from './Button';
+import { cn } from '@/lib/utils/cn';
 
 export function Badge({ className, children }: React.HTMLAttributes<HTMLSpanElement>) {
   return (

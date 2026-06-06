@@ -1,8 +1,10 @@
+export const revalidate = 300;
+
 import { DivisionHeroSlider } from '@/components/sections/DivisionHeroSlider';
 import Image from 'next/image';
-import { Zap, ShieldCheck, Cpu, CheckCircle, HardHat, Landmark, Network } from 'lucide-react';
+import { Zap, ShieldCheck, Cpu, CheckCircle, HardHat, Landmark, Network, Phone } from 'lucide-react';
 
-export default function EnterprisePage() {
+export default async function EnterprisePage() {
   const fallbackSlides = [
     {
       _id: 'enterprise-fallback-1',
@@ -52,6 +54,7 @@ export default function EnterprisePage() {
                 src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop" 
                 alt="Transmission and distribution tower execution" 
                 fill
+                loading="lazy"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-brand-navy/30 mix-blend-multiply" />
@@ -156,6 +159,37 @@ export default function EnterprisePage() {
                   <h4 className="font-bold text-xl mb-1">Grid Compliance</h4>
                   <p className="text-sm text-gray-400">Full conformance to grid standards and statutory safety regulations.</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Talk to Our Project Team */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto bg-gray-50 border border-gray-150 text-brand-navy rounded-2xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(243,115,33,0.08),transparent)]" />
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+              <div>
+                <span className="text-brand-orange font-bold uppercase tracking-wider text-xs mb-3 block">
+                  Talk to Our Project Team
+                </span>
+                <h3 className="text-3xl font-bold mb-1 text-brand-navy">Mr. Manoranjan Bal</h3>
+                <p className="text-gray-600 text-base font-semibold mb-6">Project Manager</p>
+                <p className="text-gray-500 text-sm max-w-xl">
+                  Contact our project manager directly to discuss electrification schemes, substations, or distribution line EPC contracts.
+                </p>
+              </div>
+              
+              <div className="shrink-0 w-full md:w-auto">
+                <a 
+                  href="tel:+917504929429" 
+                  className="flex items-center justify-center gap-3 bg-brand-navy hover:bg-brand-orange text-white transition-colors px-8 py-4 rounded-xl font-bold text-base cursor-pointer shadow-md"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>Call Project Manager</span>
+                </a>
               </div>
             </div>
           </div>

@@ -1,13 +1,15 @@
+export const revalidate = 300;
+
 import { DivisionHeroSlider } from '@/components/sections/DivisionHeroSlider';
 import Image from 'next/image';
-import { Factory, ShieldCheck, Award, Settings, Layers } from 'lucide-react';
+import { Factory, ShieldCheck, Award, Settings, Layers, Phone } from 'lucide-react';
 
-export default function ConcretePage() {
+export default async function ConcretePage() {
   const fallbackSlides = [
     {
       _id: 'concrete-fallback-1',
       image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop',
-      title: 'Shivom Concrete',
+      title: 'Shivom Concrete Products',
       subtitle: 'Manufacturing high-strength pre-stressed cement concrete (PSC) poles and structures.',
       buttonText: 'Request Consultation',
       buttonLink: '/contact'
@@ -30,7 +32,7 @@ export default function ConcretePage() {
                 Utility-Grade Infrastructure Products & PSC Pole Manufacturing
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Shivom Concrete stands at the forefront of industrial manufacturing in Odisha. We are a premier manufacturer of prestressed concrete poles (PSC poles), utilizing advanced casting technology and a highly controlled curing process to deliver robust, weather-resistant, and high-tensile strength solutions for large-scale utility and power distribution networks.
+                Shivom Concrete Products stands at the forefront of industrial manufacturing in Odisha. We are a premier manufacturer of prestressed concrete poles (PSC poles), utilizing advanced casting technology and a highly controlled curing process to deliver robust, weather-resistant, and high-tensile strength solutions for large-scale utility and power distribution networks.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
                 Through strict quality control, manufacturing excellence, and high-capacity production lines, we ensure all products comply with the highest utility-grade infrastructure standards set by state discoms and corporate energy developers.
@@ -52,10 +54,11 @@ export default function ConcretePage() {
                 src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop" 
                 alt="PSC pole manufacturing casting bed yard" 
                 fill
+                loading="lazy"
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-brand-navy/30 mix-blend-multiply" />
-              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-xl border border-gray-100 shadow-lg">
+              <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-xl border border-gray-150 shadow-lg">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange flex-shrink-0">
                     <Factory className="w-6 h-6" />
@@ -156,6 +159,37 @@ export default function ConcretePage() {
                   <h4 className="font-bold text-xl mb-1">ISO Certified Quality</h4>
                   <p className="text-sm text-gray-400">Rigorous batch-testing of cement, aggregate, and high-tensile steel strands.</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Talk to Our Manufacturing Team */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto bg-gray-50 border border-gray-150 text-brand-navy rounded-2xl p-8 md:p-12 shadow-sm relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(243,115,33,0.08),transparent)]" />
+            <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+              <div>
+                <span className="text-brand-orange font-bold uppercase tracking-wider text-xs mb-3 block">
+                  Talk to Our Manufacturing Team
+                </span>
+                <h3 className="text-3xl font-bold mb-1 text-brand-navy">Mr. Sunil Kumar Nayak</h3>
+                <p className="text-gray-600 text-base font-semibold mb-6">Manager</p>
+                <p className="text-gray-500 text-sm max-w-xl">
+                  Contact our manufacturing manager directly to discuss PSC pole supplies, utility specifications, or high-volume orders.
+                </p>
+              </div>
+              
+              <div className="shrink-0 w-full md:w-auto">
+                <a 
+                  href="tel:+916204929709" 
+                  className="flex items-center justify-center gap-3 bg-brand-navy hover:bg-brand-orange text-white transition-colors px-8 py-4 rounded-xl font-bold text-base cursor-pointer shadow-md"
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>Call Manufacturing Manager</span>
+                </a>
               </div>
             </div>
           </div>
