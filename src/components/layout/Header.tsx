@@ -48,8 +48,8 @@ export function Header() {
   ];
 
   // Check if dropdown path is active
-  const isAboutActive = pathname === '/about' || pathname === '/awards-certifications';
-  const isGroupActive = pathname.startsWith('/our-group/');
+  const isAboutActive = pathname === '/about' || pathname === '/about/' || pathname === '/awards-certifications' || pathname === '/awards-certifications/';
+  const isGroupActive = pathname.startsWith('/our-group/') || pathname === '/our-group' || pathname === '/our-group/';
 
   return (
     <header className={cn(
@@ -75,7 +75,7 @@ export function Header() {
           <Link href="/" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname === '/' && 'text-brand-orange'
+            (pathname === '/' || pathname === '') && 'text-brand-orange'
           )}>
             Home
           </Link>
@@ -110,7 +110,7 @@ export function Header() {
                       href={link.href} 
                       className={cn(
                         "px-4 py-2 text-sm transition-colors hover:bg-gray-50",
-                        pathname === link.href ? 'text-brand-orange font-bold' : 'text-brand-navy hover:text-brand-orange'
+                        (pathname === link.href || pathname === `${link.href}/`) ? 'text-brand-orange font-bold' : 'text-brand-navy hover:text-brand-orange'
                       )}
                     >
                       {link.label}
@@ -148,7 +148,7 @@ export function Header() {
                       href={link.href} 
                       className={cn(
                         "px-4 py-2 text-sm transition-colors hover:bg-gray-50",
-                        pathname === link.href ? 'text-brand-orange font-bold' : 'text-brand-navy hover:text-brand-orange'
+                        (pathname === link.href || pathname === `${link.href}/`) ? 'text-brand-orange font-bold' : 'text-brand-navy hover:text-brand-orange'
                       )}
                     >
                       {link.label}
@@ -163,7 +163,7 @@ export function Header() {
           <Link href="/projects" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname.startsWith('/projects') && 'text-brand-orange'
+            (pathname === '/projects' || pathname.startsWith('/projects/')) && 'text-brand-orange'
           )}>
             Projects
           </Link>
@@ -172,7 +172,7 @@ export function Header() {
           <Link href="/events" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname.startsWith('/events') && 'text-brand-orange'
+            (pathname === '/events' || pathname.startsWith('/events/')) && 'text-brand-orange'
           )}>
             Events
           </Link>
@@ -181,7 +181,7 @@ export function Header() {
           <Link href="/careers" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname === '/careers' && 'text-brand-orange'
+            (pathname === '/careers' || pathname === '/careers/') && 'text-brand-orange'
           )}>
             Careers
           </Link>
@@ -190,7 +190,7 @@ export function Header() {
           <Link href="/contact" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname === '/contact' && 'text-brand-orange'
+            (pathname === '/contact' || pathname === '/contact/') && 'text-brand-orange'
           )}>
             Contact Us
           </Link>
@@ -226,7 +226,7 @@ export function Header() {
               {/* Home */}
               <Link 
                 href="/" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/' || pathname === '') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
@@ -235,7 +235,7 @@ export function Header() {
               {/* About Us (Direct Link) */}
               <Link 
                 href="/about" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/about' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", isAboutActive ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About Us
@@ -244,7 +244,7 @@ export function Header() {
               {/* Awards & Certifications */}
               <Link 
                 href="/awards-certifications" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/awards-certifications' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/awards-certifications' || pathname === '/awards-certifications/') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Awards & Certifications
@@ -274,7 +274,7 @@ export function Header() {
                         <Link 
                           key={link.href} 
                           href={link.href} 
-                          className={cn("py-1 font-medium hover:text-brand-orange", pathname === link.href ? 'text-brand-orange' : 'text-brand-navy/80')}
+                          className={cn("py-1 font-medium hover:text-brand-orange", (pathname === link.href || pathname === `${link.href}/`) ? 'text-brand-orange' : 'text-brand-navy/85')}
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           {link.label}
@@ -288,7 +288,7 @@ export function Header() {
               {/* Projects */}
               <Link 
                 href="/projects" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname.startsWith('/projects') ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/projects' || pathname.startsWith('/projects/')) ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
@@ -297,7 +297,7 @@ export function Header() {
               {/* Events */}
               <Link 
                 href="/events" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname.startsWith('/events') ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/events' || pathname.startsWith('/events/')) ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Events
@@ -306,7 +306,7 @@ export function Header() {
               {/* Careers */}
               <Link 
                 href="/careers" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/careers' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/careers' || pathname === '/careers/') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Careers
@@ -315,7 +315,7 @@ export function Header() {
               {/* Contact Us */}
               <Link 
                 href="/contact" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/contact' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", (pathname === '/contact' || pathname === '/contact/') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Contact Us

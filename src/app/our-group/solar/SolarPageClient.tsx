@@ -654,10 +654,10 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               <div className="shrink-0 w-full md:w-auto">
                 <a 
                   href="tel:+918895197406" 
-                  className="flex items-center justify-center gap-3 bg-brand-navy hover:bg-brand-orange text-white transition-all duration-300 px-8 py-4 rounded-xl font-bold text-base cursor-pointer shadow-md hover:scale-105 active:scale-95 group-hover:shadow-lg"
+                  className="flex items-center justify-center gap-3 bg-brand-navy hover:bg-brand-orange text-white transition-all duration-300 px-8 py-4 rounded-xl font-bold text-base cursor-pointer shadow-md hover:scale-105 active:scale-95 group-hover:shadow-lg text-center"
                 >
-                  <Phone className="w-5 h-5 animate-bounce" style={{ animationDuration: '2s' }} />
-                  <span>Call Solar Expert</span>
+                  <Phone className="w-5 h-5 animate-bounce shrink-0" style={{ animationDuration: '2s' }} />
+                  <span>Mr. Debendra Kumar Mishra +91 8895197406</span>
                 </a>
               </div>
             </div>

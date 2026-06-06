@@ -34,7 +34,7 @@ async function run() {
 
   for (const url of endpoints) {
     const form = new FormData();
-    form.append('fullName', 'Test Dev');
+    form.append('applicantName', 'Test Dev');
     form.append('email', 'testdev@gmail.com');
     form.append('phone', '8895865734');
     form.append('currentLocation', 'Bhubaneswar');

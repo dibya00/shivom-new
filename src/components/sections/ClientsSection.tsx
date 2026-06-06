@@ -2,6 +2,7 @@ import { clientsService } from '@/services/clients.service';
 import { SectionHeading } from '../ui/SectionHeading';
 import { IClient } from '@/types';
 import Image from 'next/image';
+import { cn } from '@/lib/utils/cn';
 
 export async function ClientsSection() {
   let clients: IClient[] = [];
@@ -19,11 +20,19 @@ export async function ClientsSection() {
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeading title="Trusted By Leaders" subtitle="Our Clients" />
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mt-16">
+        <div className={cn(
+          "gap-8 mt-16",
+          clients.length === 1 && "flex justify-center",
+          clients.length === 2 && "flex flex-wrap justify-center",
+          clients.length >= 3 && "flex flex-wrap justify-center"
+        )}>
           {clients.map((client: IClient) => (
             <div
               key={client._id}
-              className="h-24 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-4 group hover:bg-white hover:border-brand-orange/30 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden"
+              className={cn(
+                "h-24 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center p-4 group hover:bg-white hover:border-brand-orange/30 hover:shadow-lg transition-all duration-300 cursor-pointer relative overflow-hidden",
+                clients.length >= 3 ? "w-[calc(50%-16px)] sm:w-[calc(33.33%-22px)] lg:w-[calc(16.66%-27px)] min-w-[140px] max-w-[200px]" : "w-full max-w-[200px]"
+              )}
             >
               {client.logo ? (
                 <div className="relative w-full h-full opacity-60 group-hover:opacity-100 transition-opacity">

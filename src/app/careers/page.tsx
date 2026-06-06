@@ -157,7 +157,7 @@ export default function CareersPage() {
 
   const validateForm = () => {
     const errors: Record<string, string> = {};
-    if (!formData.fullName.trim()) errors.fullName = 'Full Name is required.';
+    if (!formData.fullName.trim()) errors.fullName = 'Applicant Name is required.';
     if (!formData.email.trim()) {
       errors.email = 'Email Address is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -166,12 +166,15 @@ export default function CareersPage() {
     if (!formData.phone.trim()) errors.phone = 'Phone Number is required.';
     if (!formData.currentLocation.trim()) errors.currentLocation = 'Current Location is required.';
     if (!formData.experience.trim()) errors.experience = 'Years of Experience is required.';
+    
     if (!resumeFile) {
       setFileError('Please upload your resume.');
-      return false;
+    } else {
+      setFileError(null);
     }
+    
     setFormErrors(errors);
-    return Object.keys(errors).length === 0;
+    return Object.keys(errors).length === 0 && !!resumeFile;
   };
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -181,6 +184,7 @@ export default function CareersPage() {
     if (!validateForm()) return;
 
     const payload = new FormData();
+    payload.append("applicantName", formData.fullName);
     payload.append("fullName", formData.fullName);
     payload.append("email", formData.email);
     payload.append("phone", formData.phone);
