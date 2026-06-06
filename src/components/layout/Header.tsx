@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -17,7 +18,6 @@ export function Header() {
   const [groupDropdownOpen, setGroupDropdownOpen] = useState(false);
 
   // Mobile sub-menu toggle states
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileGroupOpen, setMobileGroupOpen] = useState(false);
 
   const pathname = usePathname();
@@ -32,7 +32,6 @@ export function Header() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMobileMenuOpen(false);
-      setMobileAboutOpen(false);
       setMobileGroupOpen(false);
     }, 0);
     return () => clearTimeout(timer);
@@ -40,8 +39,8 @@ export function Header() {
 
   const groupLinks = [
     { label: 'Shivom Enterprise', href: '/our-group/enterprise' },
-    { label: 'Shivom Solar', href: '/our-group/solar' },
-    { label: 'Shivom Concrete', href: '/our-group/concrete' },
+    { label: 'Shivom Solar Solutions', href: '/our-group/solar' },
+    { label: 'Shivom Concrete Products', href: '/our-group/concrete' },
   ];
 
   const aboutLinks = [
@@ -60,9 +59,14 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <span className={cn('text-2xl font-bold tracking-tight transition-colors', isScrolled ? 'text-brand-navy' : 'text-white')}>
-            Shivom<span className="text-brand-orange">Group</span>
-          </span>
+          <Image 
+            src="/logo.png" 
+            alt="Shivom Group Logo" 
+            width={120} 
+            height={110} 
+            className="w-auto h-14 md:h-16 lg:h-20 object-contain"
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -100,12 +104,6 @@ export function Header() {
                   exit={{ opacity: 0, y: 10 }}
                   className="absolute top-full left-0 mt-2 w-56 bg-white rounded-md shadow-xl py-2 flex flex-col border border-gray-100"
                 >
-                  <Link href="/about" className={cn(
-                    "px-4 py-2 text-sm transition-colors hover:bg-gray-50",
-                    pathname === '/about' ? 'text-brand-orange font-bold' : 'text-brand-navy hover:text-brand-orange'
-                  )}>
-                    About Overview
-                  </Link>
                   {aboutLinks.map((link) => (
                     <Link 
                       key={link.href} 
@@ -165,7 +163,7 @@ export function Header() {
           <Link href="/projects" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname === '/projects' && 'text-brand-orange'
+            pathname.startsWith('/projects') && 'text-brand-orange'
           )}>
             Projects
           </Link>
@@ -174,7 +172,7 @@ export function Header() {
           <Link href="/events" className={cn(
             'text-sm font-semibold transition-colors hover:text-brand-orange',
             isScrolled ? 'text-brand-navy' : 'text-white/90',
-            pathname === '/events' && 'text-brand-orange'
+            pathname.startsWith('/events') && 'text-brand-orange'
           )}>
             Events
           </Link>
@@ -234,47 +232,23 @@ export function Header() {
                 Home
               </Link>
 
-              {/* About Us (Mobile Expandable) */}
-              <div className="flex flex-col gap-2">
-                <button 
-                  onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-                  className={cn(
-                    "flex items-center justify-between w-full font-semibold text-lg text-left",
-                    isAboutActive ? 'text-brand-orange' : 'text-brand-navy'
-                  )}
-                >
-                  <span>About Us</span>
-                  <ChevronDown className={cn("w-5 h-5 transition-transform", mobileAboutOpen && "rotate-180")} />
-                </button>
-                <AnimatePresence>
-                  {mobileAboutOpen && (
-                    <motion.div 
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-4 flex flex-col gap-2 overflow-hidden border-l-2 border-gray-100"
-                    >
-                      <Link 
-                        href="/about" 
-                        className={cn("py-1 font-medium hover:text-brand-orange", pathname === '/about' ? 'text-brand-orange' : 'text-brand-navy/80')}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        About Overview
-                      </Link>
-                      {aboutLinks.map((link) => (
-                        <Link 
-                          key={link.href} 
-                          href={link.href} 
-                          className={cn("py-1 font-medium hover:text-brand-orange", pathname === link.href ? 'text-brand-orange' : 'text-brand-navy/80')}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+              {/* About Us (Direct Link) */}
+              <Link 
+                href="/about" 
+                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/about' ? 'text-brand-orange' : 'text-brand-navy')}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About Us
+              </Link>
+
+              {/* Awards & Certifications */}
+              <Link 
+                href="/awards-certifications" 
+                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/awards-certifications' ? 'text-brand-orange' : 'text-brand-navy')}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Awards & Certifications
+              </Link>
 
               {/* Our Group (Mobile Expandable) */}
               <div className="flex flex-col gap-2">
@@ -314,7 +288,7 @@ export function Header() {
               {/* Projects */}
               <Link 
                 href="/projects" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/projects' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", pathname.startsWith('/projects') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Projects
@@ -323,7 +297,7 @@ export function Header() {
               {/* Events */}
               <Link 
                 href="/events" 
-                className={cn("font-semibold text-lg hover:text-brand-orange", pathname === '/events' ? 'text-brand-orange' : 'text-brand-navy')}
+                className={cn("font-semibold text-lg hover:text-brand-orange", pathname.startsWith('/events') ? 'text-brand-orange' : 'text-brand-navy')}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Events
