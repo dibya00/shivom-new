@@ -349,39 +349,47 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
 
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16 relative">
-              {/* Badge — supporting label */}
+              {/* PRIMARY HERO TITLE — PM Surya Ghar Yojana */}
               <motion.div
-                initial={{ opacity: 0, y: -16 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white mb-6 shadow-lg"
+                transition={{ duration: 0.6 }}
+                className="mb-5"
               >
-                <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-brand-orange to-[#FFB703] flex items-center justify-center p-1 shadow-md flex-shrink-0">
-                  <Sun className="w-full h-full text-white" />
-                </div>
                 <a
                   href="https://consumer.pmsuryaghar.gov.in/consumer/#/login"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold tracking-widest uppercase text-white/90 hover:text-[#FFB703] transition-colors duration-200 underline-offset-2 hover:underline cursor-pointer"
+                  className="group inline-block"
                 >
-                  PM Surya Ghar Yojana
+                  <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight tracking-tight group-hover:text-[#FFB703] transition-colors duration-300 cursor-pointer">
+                    PM Surya Ghar Yojana
+                  </h2>
+                  {/* Accent underline */}
+                  <div className="mt-3 h-1.5 w-2/3 mx-auto rounded-full bg-gradient-to-r from-brand-orange to-[#FFB703] group-hover:w-full transition-all duration-500" />
                 </a>
               </motion.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
+              {/* Supporting headline */}
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6"
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-white/90 leading-snug tracking-tight mb-2"
               >
-                Power Your Home With <br className="hidden md:block" />
-                <span className="text-[#FFB703]">
-                  Free Solar Energy
-                </span>
-              </motion.h2>
+                Power Your Home With
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#FFB703] leading-tight tracking-tight mb-8"
+              >
+                Free Solar Energy
+              </motion.p>
 
               {/* Government Trust Ribbon */}
               <motion.div 
