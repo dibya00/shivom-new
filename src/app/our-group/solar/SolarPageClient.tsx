@@ -363,7 +363,7 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                   rel="noopener noreferrer"
                   className="group inline-block"
                 >
-                  <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight tracking-tight group-hover:text-[#FFB703] transition-colors duration-300 cursor-pointer">
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight group-hover:text-[#FFB703] transition-colors duration-300 cursor-pointer">
                     PM Surya Ghar Yojana
                   </h2>
                   {/* Accent underline */}
