@@ -341,85 +341,44 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
       {/* 4. ACTIVE SCHEMES / PROMOTIONS (ENHANCED SURYA GHAR YOJANA SECTION) */}
       {promotions.length > 0 && (
         <section className="py-24 relative overflow-hidden bg-brand-navy text-white border-y border-brand-orange/20">
-          {/* Background Layers */}
+          {/* Subtle static background overlay — no looping animations */}
           <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-            {/* PM Modi Silhouette / Background Placeholder removed to improve right side composition */}
-
-            {/* Gradient Mesh Animation (Orange -> Yellow -> Blue) */}
-            <motion.div 
-              animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1], x: [0, 50, 0] }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-brand-orange/30 rounded-full blur-[120px] mix-blend-screen"
-            />
-            <motion.div 
-              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.3, 1], y: [0, 30, 0] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-[#FFB703]/20 rounded-full blur-[100px] mix-blend-screen"
-            />
-            <motion.div 
-              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1], x: [0, -40, 0] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-              className="absolute bottom-[-20%] right-[20%] w-[70%] h-[70%] bg-brand-blue/30 rounded-full blur-[130px] mix-blend-screen"
-            />
-
-            {/* Animated Sun Rays */}
-            <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] opacity-[0.07] pointer-events-none origin-center">
-               <motion.div 
-                 animate={{ rotate: 360 }}
-                 transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-                 className="w-full h-full"
-                 style={{
-                   background: 'repeating-conic-gradient(from 0deg, transparent 0deg 10deg, #FFB703 10deg 20deg)',
-                   maskImage: 'radial-gradient(circle, black, transparent 60%)',
-                   WebkitMaskImage: 'radial-gradient(circle, black, transparent 60%)'
-                 }}
-               />
-            </div>
-
-            {/* Floating Energy Particles */}
-            <div className="absolute inset-0 overflow-hidden opacity-50">
-              {Array.from({ length: 25 }).map((_, i) => (
-                <motion.div
-                  key={`particle-${i}`}
-                  initial={{ y: `${(i * 17) % 100}%`, x: `${(i * 23) % 100}%`, scale: ((i * 7) % 50) / 100 + 0.5 }}
-                  animate={{ y: [null, `${(i * 17 + 20) % 100}%`], opacity: [0, 1, 0] }}
-                  transition={{ duration: 10 + (i % 5), repeat: Infinity, ease: "linear" }}
-                  className="absolute w-2 h-2 rounded-full bg-[#FFB703] blur-[1px]"
-                  style={{ boxShadow: '0 0 12px 3px rgba(255, 183, 3, 0.8)' }}
-                />
-              ))}
-            </div>
-            
-            {/* Soft grid */}
-            <div className="absolute inset-0 bg-[url('/patterns/grid.svg')] opacity-[0.04] bg-repeat" />
+            <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-brand-orange/20 rounded-full blur-[120px] mix-blend-screen opacity-40" />
+            <div className="absolute bottom-[-20%] right-[20%] w-[70%] h-[70%] bg-brand-blue/20 rounded-full blur-[130px] mix-blend-screen opacity-30" />
           </div>
 
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16 relative">
-              {/* Floating subsidy badge */}
+              {/* Badge */}
               <motion.div
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 0.5 }}
                 className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white mb-8 shadow-2xl"
               >
                 <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-orange to-[#FFB703] flex items-center justify-center p-1.5 shadow-lg">
-                  <Sun className="w-full h-full text-white animate-spin-slow" style={{ animationDuration: '6s' }} />
+                  <Sun className="w-full h-full text-white" />
                 </div>
-                <span className="text-sm font-bold tracking-widest uppercase text-white/95 drop-shadow-md">PM Surya Ghar Yojana</span>
+                <a
+                  href="https://consumer.pmsuryaghar.gov.in/consumer/#/login"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-bold tracking-widest uppercase text-white/95 drop-shadow-md hover:text-[#FFB703] transition-colors duration-200 underline-offset-2 hover:underline cursor-pointer"
+                >
+                  PM Surya Ghar Yojana
+                </a>
               </motion.div>
 
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/80 tracking-tight leading-tight mb-6"
+                className="text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6"
               >
                 Power Your Home With <br className="hidden md:block" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFB703] to-brand-orange">
+                <span className="text-[#FFB703]">
                   Free Solar Energy
                 </span>
               </motion.h2>
