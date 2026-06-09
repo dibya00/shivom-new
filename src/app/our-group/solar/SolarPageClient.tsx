@@ -111,14 +111,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
   };
 
   const kitFeatures = [
-    { title: 'Solar Panels',               image: '/solar-products/solar-panels.png' },
-    { title: 'Solar Inverters',            image: '/solar-products/solar-inverter.png' },
-    { title: 'Solar Battery Storage',      image: '/solar-products/solar-battery.png' },
-    { title: 'Solar Structure',            image: '/solar-products/solar-structure.png' },
-    { title: 'ACDB & DCDB',               image: '/solar-products/acdb-dcdb.png' },
-    { title: 'Earthing System',            image: '/solar-products/solar-earthing.png' },
-    { title: 'Lightning Arrester',         image: '/solar-products/lightning-arrester.png' },
-    { title: 'Installation & Commissioning', image: '/solar-products/installation-commissioning.jpg' },
+    { title: 'Solar Panels',                  image: '/solar-products/solar-panels.png' },
+    { title: 'Solar Inverters',               image: '/solar-products/solar-inverter.png' },
+    { title: 'Solar Batteries',               image: '/solar-products/solar-battery.png' },
+    { title: 'AC/DC Distribution Boxes',      image: '/solar-products/acdb-dcdb.png' },
+    { title: 'Earthing Systems',              image: '/solar-products/solar-earthing.png' },
+    { title: 'Solar Cables & Accessories',    image: '/solar-products/solar-cable.jpg' },
+    { title: 'Installation & Commissioning',  image: '/solar-products/installation-commissioning.jpg' },
+    { title: 'Solar Structure',               image: '/solar-products/solar-structure.png' },
   ];
 
   return (
@@ -297,51 +297,29 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                 </p>
               </motion.div>
 
-              {/* Premium Product Image Card Grid */}
-              <motion.div
+              {/* Staggered Checklist Grid */}
+              <motion.ul
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
                 variants={containerStagger}
-                className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"
               >
                 {kitFeatures.map((feature, idx) => (
-                  <motion.div
+                  <motion.li
                     key={idx}
                     variants={itemFade}
-                    className="group relative"
                   >
                     <button
                       onClick={() => setSelectedGalleryImage(feature)}
-                      className="w-full focus:outline-none focus:ring-2 focus:ring-brand-orange/60 rounded-xl"
-                      aria-label={`View ${feature.title}`}
+                      className="w-full text-left flex items-center gap-3 text-brand-navy font-semibold text-sm bg-white border border-gray-150/60 p-4 rounded-xl shadow-sm hover:border-brand-orange/40 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 group"
                     >
-                      {/* Card */}
-                      <div className="relative overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                        {/* Fixed-ratio image container — prevents CLS */}
-                        <div className="relative w-full" style={{ paddingBottom: '75%' }}>
-                          <Image
-                            src={feature.image}
-                            alt={feature.title}
-                            fill
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
-                            loading="lazy"
-                            className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-                          />
-                        </div>
-                        {/* Label bar */}
-                        <div className="px-3 py-2 border-t border-gray-100 bg-gray-50/80">
-                          <p className="text-xs font-bold text-brand-navy text-center leading-tight group-hover:text-brand-orange transition-colors line-clamp-1">
-                            {feature.title}
-                          </p>
-                        </div>
-                        {/* Hover overlay hint */}
-                        <div className="absolute inset-0 rounded-xl border-2 border-brand-orange/0 group-hover:border-brand-orange/30 transition-all duration-300 pointer-events-none" />
-                      </div>
+                      <CheckCircle className="w-5 h-5 text-brand-orange shrink-0 group-hover:scale-110 transition-transform" />
+                      <span className="group-hover:text-brand-orange transition-colors">{feature.title}</span>
                     </button>
-                  </motion.div>
+                  </motion.li>
                 ))}
-              </motion.div>
+              </motion.ul>
 
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
@@ -1015,14 +993,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                 <X className="w-6 h-6" />
               </button>
               
-              <div className="relative w-full aspect-video bg-gray-100">
+              <div className="relative w-full bg-white" style={{ minHeight: '320px', maxHeight: '520px', height: '60vh' }}>
                 <Image
                   src={selectedGalleryImage.image}
                   alt={selectedGalleryImage.title}
                   fill
                   loading="lazy"
-                  className="object-cover"
-                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                  className="object-contain p-6"
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw" />
               </div>
               
               <div className="p-6 md:p-8 bg-white flex items-center justify-between">
