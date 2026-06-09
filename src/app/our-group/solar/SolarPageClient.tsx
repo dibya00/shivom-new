@@ -349,22 +349,22 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
 
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16 relative">
-              {/* Badge */}
+              {/* Badge — supporting label */}
               <motion.div
                 initial={{ opacity: 0, y: -16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white mb-8 shadow-2xl"
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white mb-6 shadow-lg"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-orange to-[#FFB703] flex items-center justify-center p-1.5 shadow-lg">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-brand-orange to-[#FFB703] flex items-center justify-center p-1 shadow-md flex-shrink-0">
                   <Sun className="w-full h-full text-white" />
                 </div>
                 <a
                   href="https://consumer.pmsuryaghar.gov.in/consumer/#/login"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm font-bold tracking-widest uppercase text-white/95 drop-shadow-md hover:text-[#FFB703] transition-colors duration-200 underline-offset-2 hover:underline cursor-pointer"
+                  className="text-xs font-semibold tracking-widest uppercase text-white/90 hover:text-[#FFB703] transition-colors duration-200 underline-offset-2 hover:underline cursor-pointer"
                 >
                   PM Surya Ghar Yojana
                 </a>
