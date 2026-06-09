@@ -111,14 +111,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
   };
 
   const kitFeatures = [
-    { title: 'Solar Panels', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800' },
-    { title: 'Solar Inverters', image: 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=800' },
-    { title: 'Solar Batteries', image: 'https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=800' },
-    { title: 'AC/DC Distribution Boxes', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800' },
-    { title: 'Earthing Systems', image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=800' },
-    { title: 'Solar Cables & Accessories', image: 'https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80&w=800' },
-    { title: 'Installation & Commissioning', image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800' },
-    { title: 'AMC & Maintenance Support', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800' }
+    { title: 'Solar Panels',               image: '/solar-products/solar-panels.png' },
+    { title: 'Solar Inverters',            image: '/solar-products/solar-inverter.png' },
+    { title: 'Solar Battery Storage',      image: '/solar-products/solar-battery.png' },
+    { title: 'Solar Structure',            image: '/solar-products/solar-structure.png' },
+    { title: 'ACDB & DCDB',               image: '/solar-products/acdb-dcdb.png' },
+    { title: 'Earthing System',            image: '/solar-products/solar-earthing.png' },
+    { title: 'Lightning Arrester',         image: '/solar-products/lightning-arrester.png' },
+    { title: 'Installation & Commissioning', image: '/solar-products/installation-commissioning.jpg' },
   ];
 
   return (
@@ -297,29 +297,51 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                 </p>
               </motion.div>
 
-              {/* Staggered Checklist Grid */}
-              <motion.ul 
+              {/* Premium Product Image Card Grid */}
+              <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
                 variants={containerStagger}
-                className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"
+                className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10"
               >
                 {kitFeatures.map((feature, idx) => (
-                  <motion.li 
+                  <motion.div
                     key={idx}
                     variants={itemFade}
+                    className="group relative"
                   >
                     <button
                       onClick={() => setSelectedGalleryImage(feature)}
-                      className="w-full text-left flex items-center gap-3 text-brand-navy font-semibold text-sm bg-white border border-gray-150/60 p-4 rounded-xl shadow-sm hover:border-brand-orange/40 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 group"
+                      className="w-full focus:outline-none focus:ring-2 focus:ring-brand-orange/60 rounded-xl"
+                      aria-label={`View ${feature.title}`}
                     >
-                      <CheckCircle className="w-5 h-5 text-brand-orange shrink-0 group-hover:scale-110 transition-transform" />
-                      <span className="group-hover:text-brand-orange transition-colors">{feature.title}</span>
+                      {/* Card */}
+                      <div className="relative overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                        {/* Fixed-ratio image container — prevents CLS */}
+                        <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+                          <Image
+                            src={feature.image}
+                            alt={feature.title}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 15vw"
+                            loading="lazy"
+                            className="object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                        {/* Label bar */}
+                        <div className="px-3 py-2 border-t border-gray-100 bg-gray-50/80">
+                          <p className="text-xs font-bold text-brand-navy text-center leading-tight group-hover:text-brand-orange transition-colors line-clamp-1">
+                            {feature.title}
+                          </p>
+                        </div>
+                        {/* Hover overlay hint */}
+                        <div className="absolute inset-0 rounded-xl border-2 border-brand-orange/0 group-hover:border-brand-orange/30 transition-all duration-300 pointer-events-none" />
+                      </div>
                     </button>
-                  </motion.li>
+                  </motion.div>
                 ))}
-              </motion.ul>
+              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
