@@ -12,7 +12,6 @@ import {
   Mail, 
   Globe, 
   Building, 
-  Factory, 
   CheckCircle2, 
   AlertCircle, 
   Loader2 
@@ -222,14 +221,14 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              {/* Office 1 (Primary): SHIVOM SOLAR SOLUTIONS */}
+              {/* Office: SHIVOM GROUP */}
               <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 rounded-lg bg-brand-orange/10 flex items-center justify-center shrink-0">
                   <Building className="w-6 h-6 text-brand-orange" />
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <h3 className="text-lg font-bold text-brand-navy">SHIVOM SOLAR SOLUTIONS</h3>
+                    <h3 className="text-lg font-bold text-brand-navy">SHIVOM GROUP</h3>
                     <span className="bg-brand-orange/15 text-brand-orange text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Primary</span>
                   </div>
                   <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line mb-3">
@@ -239,39 +238,6 @@ export default function ContactPage() {
                     Odisha, India
                   </p>
                   <p className="text-xs text-brand-orange font-bold">GSTIN: 21BOKPS6552Q1Z7</p>
-                </div>
-              </div>
-
-              {/* Office 2: Corporate Office */}
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 rounded-lg bg-brand-orange/10 flex items-center justify-center shrink-0">
-                  <Building className="w-6 h-6 text-brand-orange" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-brand-navy mb-2">Corporate Office</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
-                    Akshay Nagar{"\n"}
-                    Katapali Road{"\n"}
-                    Bargarh{"\n"}
-                    Odisha – 768028
-                  </p>
-                </div>
-              </div>
-
-              {/* Office 3: Manufacturing Unit */}
-              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex gap-4 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 rounded-lg bg-brand-blue/10 flex items-center justify-center shrink-0">
-                  <Factory className="w-6 h-6 text-brand-blue" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-brand-navy mb-2">Manufacturing Unit</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
-                    Khuntpali{"\n"}
-                    Talpali{"\n"}
-                    Gaisilet{"\n"}
-                    Bargarh{"\n"}
-                    Odisha – 768036
-                  </p>
                 </div>
               </div>
 
