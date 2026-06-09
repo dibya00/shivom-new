@@ -223,11 +223,8 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
         </div>
       </section>
 
-      {/* 3. ⭐ NEW: COMPLETE SOLAR KIT SOLUTIONS SECTION */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 via-brand-orange/[0.02] to-brand-blue/[0.02] border-y border-gray-200/50 relative overflow-hidden">
-        {/* Animated Glow Accents */}
-        <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
-        <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl -z-10 animate-pulse" style={{ animationDuration: '12s' }} />
+      {/* 3. COMPLETE SOLAR KIT SOLUTIONS SECTION */}
+      <section className="py-24 bg-white relative overflow-hidden">
 
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col lg:flex-row gap-16 items-center">
