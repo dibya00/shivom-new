@@ -4,6 +4,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { IProject } from '@/types';
+import { ClientBrand } from '../ui/ClientBrand';
 
 export async function ProjectShowcase() {
   let projects: IProject[] = [];
@@ -41,14 +42,12 @@ export async function ProjectShowcase() {
                     alt={project.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
                   <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex items-end justify-between z-10">
                     <div>
-                      <span className="text-brand-orange font-medium text-sm tracking-widest uppercase mb-2 block">
-                        {project.category}
-                      </span>
+                      <ClientBrand name={project.clientName || project.category} theme="dark" className="mb-3" />
                       <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">
                         {project.title}
                       </h3>

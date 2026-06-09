@@ -31,10 +31,10 @@ export default async function EnterprisePage() {
               <h2 className="text-4xl font-bold text-brand-navy leading-tight mb-6">
                 Pioneering Large-Scale EPC & Electrification Execution
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              <p className="text-gray-600 text-lg text-justify-content mb-6">
                 Shivom Enterprise is the premier EPC (Engineering, Procurement, and Construction) arm of the Shivom Group. We specialize in high-impact electrification schemes, utility infrastructure deployment, and transmission & distribution line networks across Odisha.
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 text-lg text-justify-content mb-8">
                 With deep field execution capability and rigorous adherence to engineering excellence, we partner with state governments, central utilities, and private energy corporations to build the backbone of tomorrow&apos;s electrical grid.
               </p>
               <div className="grid grid-cols-2 gap-6 border-t border-gray-100 pt-8">
@@ -56,7 +56,7 @@ export default async function EnterprisePage() {
                 fill
                 loading="lazy"
                 className="object-cover"
-              />
+               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
               <div className="absolute inset-0 bg-brand-navy/30 mix-blend-multiply" />
               <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-6 rounded-xl border border-gray-100 shadow-lg">
                 <div className="flex items-center gap-4">
@@ -95,7 +95,7 @@ export default async function EnterprisePage() {
                 <Network className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-bold text-brand-navy mb-4">Transmission & Distribution</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 text-justify-content">
                 Design and execution of EHV transmission lines, LT/HT distribution lines, and installation of pole-mounted and heavy ground-mounted transformers.
               </p>
             </div>
@@ -105,7 +105,7 @@ export default async function EnterprisePage() {
                 <Zap className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-bold text-brand-navy mb-4">Electrification Schemes</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 text-justify-content">
                 Turnkey implementation of government rural and urban electrification programs, including household connections and grid-connectivity expansions.
               </p>
             </div>
@@ -115,7 +115,7 @@ export default async function EnterprisePage() {
                 <Landmark className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-bold text-brand-navy mb-4">Government Utility Projects</h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 text-justify-content">
                 Trusted vendor for public utility companies (discoms), undertaking system hardening, feeder separation, and smart metering deployments.
               </p>
             </div>
@@ -129,7 +129,7 @@ export default async function EnterprisePage() {
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Unmatched Field Execution Capability</h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-12">
+            <p className="text-gray-300 text-lg text-justify-content mb-12">
               Our capability spans deep geographical networks across Odisha. With skilled engineering personnel, robust supply chains, and specialized vehicles, we deliver high-tension utilities on schedule and with absolute compliance.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">

@@ -87,10 +87,10 @@ export default async function BlogDetailPage({ params }: Props) {
         </div>
         {blog.featuredImage && (
           <div className="bg-gray-100 h-96 rounded-xl mb-12 flex items-center justify-center text-gray-400 overflow-hidden relative shadow-lg">
-            <Image src={blog.featuredImage} alt={blog.title} fill loading="lazy" className="object-cover" />
+            <Image src={blog.featuredImage} alt={blog.title} fill loading="lazy" className="object-cover"  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
           </div>
         )}
-        <div className="prose prose-lg max-w-none text-gray-600">
+        <div className="prose prose-lg max-w-none text-gray-600 text-justify-content">
           {blog.content ? (
             <div dangerouslySetInnerHTML={{ __html: blog.content }} />
           ) : (

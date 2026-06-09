@@ -50,6 +50,7 @@ export function HeroSliderClient({ slides }: Props) {
                       fill
                       priority={index === 0}
                       loading={index === 0 ? undefined : 'lazy'}
+                      sizes="100vw"
                       className={`object-cover transition-transform duration-[10000ms] ${isActive ? 'scale-110' : 'scale-100'}`}
                     />
                   </div>

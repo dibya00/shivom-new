@@ -145,7 +145,7 @@ export default function ContactPage() {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "SHIVOM SOLAR SOLUTIONS",
-            "image": "https://shivomgroup.in/logo.png",
+            "image": "https://shivomgroup.in/logo.webp",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "2nd Floor, Plot No.3200/14046, PS- Mancheswar, Puri-By-Pass Road, Rasulgarh",

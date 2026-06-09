@@ -81,7 +81,7 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         )}
         
-        <div className="prose prose-lg max-w-none text-gray-600">
+        <div className="prose prose-lg max-w-none text-gray-600 text-justify-content">
           <p>{event.description || 'Detailed event information is not available at the moment.'}</p>
         </div>
       </div>

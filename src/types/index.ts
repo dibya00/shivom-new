@@ -59,6 +59,8 @@ export interface IProject {
   order: number;
   metaTitle?: string;
   metaDescription?: string;
+  status?: string;
+  createdAt?: string;
 }
 
 export interface IBlog {

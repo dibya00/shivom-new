@@ -26,7 +26,7 @@ export default async function BlogsPage() {
               Industry Knowledge & Updates
             </h2>
             <div className="w-24 h-1 bg-brand-orange mx-auto rounded-full mb-6" />
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-gray-600 text-lg text-justify-content">
               Read our latest updates, tech spotlights, and announcements about infrastructure advancements and energy programs.
             </p>
           </div>
@@ -49,7 +49,7 @@ export default async function BlogsPage() {
                       fill
                       loading="lazy"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                     <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm px-4 py-1 rounded-full text-xs font-bold text-brand-navy uppercase tracking-wider shadow-sm">
                       {blog.category}
                     </div>
@@ -67,7 +67,7 @@ export default async function BlogsPage() {
                     <Link prefetch={false} href={`/blogs/${blog.slug}`}>{blog.title}</Link>
                   </h3>
                   
-                  <p className="text-gray-600 leading-relaxed mb-6 flex-grow">
+                  <p className="text-gray-600 text-justify-content mb-6 flex-grow">
                     {blog.excerpt}
                   </p>
                   

@@ -1,12 +1,48 @@
 'use client';
 
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, Variants, useInView, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sun, CheckCircle, ShieldCheck, Zap, FileText, Settings, ArrowRight, Tag, Phone } from 'lucide-react';
+import { Sun, CheckCircle, ShieldCheck, Zap, FileText, Settings, ArrowRight, Phone, X, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ISolarProduct, ISolarPromotion } from '@/types';
+
+// Helper for animated counters
+function Counter({ value, suffix = '', duration = 1.5 }: { value: number; suffix?: string; duration?: number }) {
+  const [count, setCount] = React.useState(0);
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  React.useEffect(() => {
+    if (isInView) {
+      let start = 0;
+      const end = value;
+      if (start === end) return;
+
+      const totalMiliseconds = duration * 1000;
+      const incrementTime = Math.max(Math.floor(totalMiliseconds / end), 25);
+      
+      const timer = setInterval(() => {
+        start += Math.ceil(end / (totalMiliseconds / incrementTime));
+        if (start >= end) {
+          clearInterval(timer);
+          setCount(end);
+        } else {
+          setCount(start);
+        }
+      }, incrementTime);
+
+      return () => clearInterval(timer);
+    }
+  }, [isInView, value, duration]);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {count.toLocaleString()}{suffix}
+    </span>
+  );
+}
 
 // Types for components
 interface SolarPageClientProps {
@@ -16,6 +52,18 @@ interface SolarPageClientProps {
 }
 
 export function SolarPageClient({ products, promotions, heroSlider }: SolarPageClientProps) {
+  const [selectedGalleryImage, setSelectedGalleryImage] = useState<{ title: string; image: string } | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedGalleryImage(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Animation presets for scroll reveal
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
@@ -63,14 +111,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
   };
 
   const kitFeatures = [
-    'Solar Panels',
-    'Solar Inverters',
-    'Solar Batteries',
-    'AC/DC Distribution Boxes',
-    'Earthing Systems',
-    'Solar Cables & Accessories',
-    'Installation & Commissioning',
-    'AMC & Maintenance Support'
+    { title: 'Solar Panels', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800' },
+    { title: 'Solar Inverters', image: 'https://images.unsplash.com/photo-1613665813446-82a78c468a1d?q=80&w=800' },
+    { title: 'Solar Batteries', image: 'https://images.unsplash.com/photo-1555664424-778a1e5e1b48?q=80&w=800' },
+    { title: 'AC/DC Distribution Boxes', image: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=800' },
+    { title: 'Earthing Systems', image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?q=80&w=800' },
+    { title: 'Solar Cables & Accessories', image: 'https://images.unsplash.com/photo-1558449028-b53a39d100fc?q=80&w=800' },
+    { title: 'Installation & Commissioning', image: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800' },
+    { title: 'AMC & Maintenance Support', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800' }
   ];
 
   return (
@@ -96,10 +144,10 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               <h2 className="text-4xl font-bold text-brand-navy leading-tight mb-6">
                 Leading-Edge Solar EPC & Deployment Solutions
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              <p className="text-gray-600 text-lg text-justify-content mb-6">
                 Shivom Solar Solutions is our dedicated green-energy division, delivering end-to-end solar EPC services for commercial solar projects, public institutions, and utility-scale installations. We accelerate solar deployment to support Odisha&apos;s renewable power targets.
               </p>
-              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+              <p className="text-gray-600 text-lg text-justify-content mb-8">
                 From high-capacity rooftop solar arrays to vast ground-mounted renewable infrastructure, we provide government solar execution with precision engineering, premium component procurement, and seamless grid integration.
               </p>
               
@@ -141,8 +189,8 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               className="lg:w-1/2 relative h-[480px] w-full rounded-2xl overflow-hidden shadow-2xl group"
             >
               <Image 
-                src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=1200&auto=format&fit=crop" 
-                alt="Solar deployment and renewable installations" 
+                src="/solar-infrastructure.webp" 
+                alt="Utility scale solar plant and renewable infrastructure execution" 
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 loading="lazy"
@@ -151,14 +199,22 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               <div className="absolute inset-0 bg-brand-navy/20 mix-blend-multiply transition-opacity group-hover:opacity-10" />
               
               {/* Overlay Glass Badge */}
+              <div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md px-4 py-2 rounded-lg shadow-lg flex items-center gap-3 border border-brand-orange/20 animate-pulse" style={{ animationDuration: '3s' }}>
+                <ShieldCheck className="w-5 h-5 text-green-600" />
+                <span className="text-xs font-bold text-brand-navy tracking-wide">MNRE Aligned Solutions</span>
+              </div>
+
               <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-xl transform transition-transform duration-500 group-hover:translate-y-[-5px]">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange flex-shrink-0 animate-pulse">
-                    <Sun className="w-6 h-6" />
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange to-amber-500 flex items-center justify-center text-white flex-shrink-0 shadow-inner">
+                    <Building2 className="w-6 h-6" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-brand-navy">Government Solar Execution</h4>
-                    <p className="text-sm text-gray-600">Empaneled agency with deep expertise in executing state renewable programs.</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-extrabold text-brand-navy text-lg">Government Solar Execution</h4>
+                      <CheckCircle className="w-4 h-4 text-blue-500" />
+                    </div>
+                    <p className="text-sm text-gray-600 font-medium">Certified Tier-1 EPC contractor executing utility-scale infrastructure and state renewable programs.</p>
                   </div>
                 </div>
               </div>
@@ -197,7 +253,7 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                   className="w-full h-full relative"
                 >
                   <Image 
-                    src="/complete-solar-kit.jpg"
+                    src="/complete-solar-kit.webp"
                     alt="Complete Turnkey Solar Solutions Kit"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -236,7 +292,7 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-navy leading-tight mb-6 tracking-tight">
                   Complete Solar Power Systems Under One Roof
                 </h2>
-                <p className="text-gray-600 text-lg leading-relaxed mb-8 font-light">
+                <p className="text-gray-600 text-lg text-justify-content mb-8 font-light">
                   Shivom Solar Solutions delivers complete turnkey solar power systems for residential, commercial, industrial, and institutional applications. From solar panels and inverters to batteries, protection systems, earthing, cabling, installation, and maintenance, we provide everything required for a reliable and efficient solar energy solution.
                 </p>
               </motion.div>
@@ -253,10 +309,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                   <motion.li 
                     key={idx}
                     variants={itemFade}
-                    className="flex items-center gap-3 text-brand-navy font-semibold text-sm bg-white border border-gray-150/60 p-4 rounded-xl shadow-sm hover:border-brand-orange/40 hover:shadow-md transition-all duration-300"
                   >
-                    <CheckCircle className="w-5 h-5 text-brand-orange shrink-0" />
-                    <span>{feature}</span>
+                    <button
+                      onClick={() => setSelectedGalleryImage(feature)}
+                      className="w-full text-left flex items-center gap-3 text-brand-navy font-semibold text-sm bg-white border border-gray-150/60 p-4 rounded-xl shadow-sm hover:border-brand-orange/40 hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-brand-orange/50 group"
+                    >
+                      <CheckCircle className="w-5 h-5 text-brand-orange shrink-0 group-hover:scale-110 transition-transform" />
+                      <span className="group-hover:text-brand-orange transition-colors">{feature.title}</span>
+                    </button>
                   </motion.li>
                 ))}
               </motion.ul>
@@ -283,61 +343,62 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
 
       {/* 4. ACTIVE SCHEMES / PROMOTIONS (ENHANCED SURYA GHAR YOJANA SECTION) */}
       {promotions.length > 0 && (
-        <section className="py-24 relative overflow-hidden bg-brand-navy text-white">
+        <section className="py-24 relative overflow-hidden bg-brand-navy text-white border-y border-brand-orange/20">
           {/* Background Layers */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            {/* Layer 1 & 2: Animated gradient & Solar energy glow */}
+          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            {/* PM Modi Silhouette / Background Placeholder removed to improve right side composition */}
+
+            {/* Gradient Mesh Animation (Orange -> Yellow -> Blue) */}
             <motion.div 
-              animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1] }}
+              animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.2, 1], x: [0, 50, 0] }}
               transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-brand-orange/20 rounded-full blur-[120px] mix-blend-screen"
+              className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-brand-orange/30 rounded-full blur-[120px] mix-blend-screen"
             />
             <motion.div 
-              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.3, 1] }}
+              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.3, 1], y: [0, 30, 0] }}
               transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-[30%] right-[-10%] w-[50%] h-[50%] bg-[#FFB703]/20 rounded-full blur-[100px] mix-blend-screen"
+              className="absolute top-[20%] right-[-10%] w-[50%] h-[50%] bg-[#FFB703]/20 rounded-full blur-[100px] mix-blend-screen"
             />
             <motion.div 
-              animate={{ opacity: [0.2, 0.3, 0.2], scale: [1, 1.1, 1] }}
+              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1], x: [0, -40, 0] }}
               transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
-              className="absolute bottom-[-20%] left-[20%] w-[70%] h-[70%] bg-brand-blue/30 rounded-full blur-[130px] mix-blend-screen"
+              className="absolute bottom-[-20%] right-[20%] w-[70%] h-[70%] bg-brand-blue/30 rounded-full blur-[130px] mix-blend-screen"
             />
 
-            {/* Layer 3: Floating blurred circles */}
-            <div className="absolute inset-0 hidden md:block">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={`circle-${i}`}
-                  animate={{ y: [0, -40, 0], x: [0, 30, 0], opacity: [0.05, 0.15, 0.05] }}
-                  transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute rounded-full border border-white/5 bg-white/5 backdrop-blur-3xl"
-                  style={{
-                    width: 100 + i * 50,
-                    height: 100 + i * 50,
-                    top: `${20 + i * 15}%`,
-                    left: `${10 + i * 20}%`
-                  }}
-                />
-              ))}
+            {/* Animated Sun Rays */}
+            <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] opacity-[0.07] pointer-events-none origin-center">
+               <motion.div 
+                 animate={{ rotate: 360 }}
+                 transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+                 className="w-full h-full"
+                 style={{
+                   background: 'repeating-conic-gradient(from 0deg, transparent 0deg 10deg, #FFB703 10deg 20deg)',
+                   maskImage: 'radial-gradient(circle, black, transparent 60%)',
+                   WebkitMaskImage: 'radial-gradient(circle, black, transparent 60%)'
+                 }}
+               />
             </div>
 
-            {/* Layer 4: Very subtle particle movement */}
-            <div className="absolute inset-0 bg-[url('/patterns/grid.svg')] opacity-[0.03] bg-repeat" />
-            <div className="absolute inset-0 overflow-hidden opacity-30">
-              {Array.from({ length: 15 }).map((_, i) => (
+            {/* Floating Energy Particles */}
+            <div className="absolute inset-0 overflow-hidden opacity-50">
+              {Array.from({ length: 25 }).map((_, i) => (
                 <motion.div
                   key={`particle-${i}`}
-                  initial={{ y: `${(i * 17) % 100}%`, x: `${(i * 23) % 100}%` }}
-                  animate={{ y: [null, `${(i * 17 + 20) % 100}%`] }}
-                  transition={{ duration: 15 + (i % 5), repeat: Infinity, ease: "linear" }}
-                  className="absolute w-1.5 h-1.5 rounded-full bg-white blur-[1px]"
+                  initial={{ y: `${(i * 17) % 100}%`, x: `${(i * 23) % 100}%`, scale: ((i * 7) % 50) / 100 + 0.5 }}
+                  animate={{ y: [null, `${(i * 17 + 20) % 100}%`], opacity: [0, 1, 0] }}
+                  transition={{ duration: 10 + (i % 5), repeat: Infinity, ease: "linear" }}
+                  className="absolute w-2 h-2 rounded-full bg-[#FFB703] blur-[1px]"
+                  style={{ boxShadow: '0 0 12px 3px rgba(255, 183, 3, 0.8)' }}
                 />
               ))}
             </div>
+            
+            {/* Soft grid */}
+            <div className="absolute inset-0 bg-[url('/patterns/grid.svg')] opacity-[0.04] bg-repeat" />
           </div>
 
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="text-center max-w-2xl mx-auto mb-16 relative">
+            <div className="text-center max-w-3xl mx-auto mb-16 relative">
               {/* Floating subsidy badge */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -345,100 +406,214 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
                 viewport={{ once: true }}
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white mb-8 shadow-xl"
+                className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white mb-8 shadow-2xl"
               >
-                <Sun className="w-5 h-5 text-[#FFB703] animate-spin" style={{ animationDuration: '8s' }} />
-                <span className="text-xs font-bold tracking-widest uppercase text-white/90">Government Subsidy Available</span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-orange to-[#FFB703] flex items-center justify-center p-1.5 shadow-lg">
+                  <Sun className="w-full h-full text-white animate-spin-slow" style={{ animationDuration: '6s' }} />
+                </div>
+                <span className="text-sm font-bold tracking-widest uppercase text-white/95 drop-shadow-md">PM Surya Ghar Yojana</span>
               </motion.div>
 
-              <motion.span 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-[#FFB703] font-semibold tracking-wider uppercase text-sm mb-4 block"
-              >
-                Active Schemes & Offers
-              </motion.span>
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-3xl md:text-5xl font-extrabold text-white tracking-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/80 tracking-tight leading-tight mb-6"
               >
-                Government Subsidies & Benefits
+                Power Your Home With <br className="hidden md:block" />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFB703] to-brand-orange">
+                  Free Solar Energy
+                </span>
               </motion.h2>
+
+              {/* Government Trust Ribbon */}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex flex-wrap justify-center items-center gap-4 md:gap-8 mt-6 py-4 px-6 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 max-w-5xl mx-auto shadow-xl"
+              >
+                <div className="flex items-center gap-2 text-white/90 text-xs md:text-sm font-semibold">
+                  <ShieldCheck className="w-5 h-5 text-[#FFB703]" />
+                  <span>Government Supported Rooftop Solar Program</span>
+                </div>
+                <div className="w-1.5 h-1.5 rounded-full bg-white/20 hidden md:block" />
+                <div className="flex items-center gap-2 text-white/90 text-xs md:text-sm font-semibold">
+                  <CheckCircle className="w-5 h-5 text-brand-orange" />
+                  <span>Subsidy Assistance Available</span>
+                </div>
+                <div className="w-1.5 h-1.5 rounded-full bg-white/20 hidden md:block" />
+                <div className="flex items-center gap-2 text-white/90 text-xs md:text-sm font-semibold">
+                  <FileText className="w-5 h-5 text-[#FFB703]" />
+                  <span>End-to-End Documentation Support</span>
+                </div>
+              </motion.div>
+
+              {/* 4-Step Journey Timeline */}
+              <div className="w-full max-w-5xl mx-auto mt-12 mb-8 px-4">
+                <div className="relative">
+                  <div className="absolute top-1/2 left-8 right-8 h-[2px] bg-white/10 -translate-y-1/2 hidden md:block z-0" />
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
+                    {[
+                      { step: 1, title: 'Site Survey', desc: 'Expert physical & shadow audit' },
+                      { step: 2, title: 'Subsidy Documentation Support', desc: 'Hassle-free paperwork' },
+                      { step: 3, title: 'Solar Installation', desc: 'Tier-1 solar module setup' },
+                      { step: 4, title: 'Subsidy Assistance', desc: 'DISCOM & subsidy release' },
+                    ].map((item, idx) => (
+                      <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: idx * 0.1 }}
+                        className="flex flex-col items-center text-center group"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-brand-navy border-2 border-white/20 flex items-center justify-center text-sm font-bold text-white group-hover:border-[#FFB703] group-hover:bg-[#FFB703] group-hover:text-brand-navy transition-all duration-300 shadow-xl mb-3 relative z-10">
+                          {item.step}
+                        </div>
+                        <h4 className="font-bold text-white text-sm md:text-base mb-1 group-hover:text-[#FFB703] transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-gray-400 max-w-[150px]">
+                          {item.desc}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{
-                hidden: {},
-                visible: { transition: { staggerChildren: 0.2 } }
-              }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
-            >
-              {promotions.map((promo) => (
-                <motion.div 
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-                  }}
-                  key={promo._id} 
-                  className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-xl flex flex-col md:flex-row gap-6 hover:bg-white/10 hover:border-brand-orange/30 transition-all duration-300 relative overflow-hidden group"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-orange/20 to-transparent rounded-bl-full flex items-start justify-end p-5 z-0">
-                    <Tag className="w-6 h-6 text-brand-orange/80 group-hover:text-brand-orange transition-colors" />
+            <div className="flex flex-col lg:flex-row gap-12 items-stretch max-w-7xl mx-auto relative z-20">
+              
+              {/* Left Column: Solar Homes */}
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="w-full lg:w-1/2 relative flex"
+              >
+                <div className="relative h-[400px] lg:h-auto min-h-[480px] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 group flex-grow">
+                  <Image 
+                    src="/pm-surya-ghar-residential.webp" 
+                    alt="Indian family smiling in front of a modern home with residential rooftop solar panels" 
+                    fill 
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    loading="lazy"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-brand-navy/60 via-transparent to-transparent pointer-events-none" />
+                </div>
+              </motion.div>
+ 
+              {/* Right Column: PM Surya Ghar Visual + Subsidy Benefits */}
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="w-full lg:w-1/2 relative flex flex-col gap-8 justify-between"
+              >
+                <div className="absolute inset-0 -z-10 opacity-30 mix-blend-screen pointer-events-none rounded-2xl overflow-hidden">
+                  <Image 
+                    src="/solar-energy-bg.webp" 
+                    alt="Renewable Energy Theme" 
+                    fill 
+                    loading="lazy"
+                    className="object-cover blur-sm"
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/10 to-transparent" />
+                </div>
+ 
+                {/* Subsidy Highlight Metrics */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white/10 backdrop-blur-md border border-[#FFB703]/40 rounded-2xl p-5 text-center shadow-lg hover:bg-white/15 transition-all flex flex-col justify-center">
+                    <div className="text-2xl font-extrabold text-[#FFB703] mb-1">₹1,38,000*</div>
+                    <div className="text-xs text-gray-200 uppercase tracking-wider font-semibold">Up to Max Subsidy</div>
                   </div>
-                  
-                  {promo.image && (
-                    <div className="relative w-full md:w-44 h-44 rounded-xl overflow-hidden shrink-0 border border-white/10 shadow-inner z-10">
-                      <Image 
-                        src={promo.image} 
-                        alt={promo.title} 
-                        fill 
-                        sizes="176px"
-                        loading="lazy" 
-                        className="object-cover transition-transform duration-1000 group-hover:scale-110" 
-                      />
+                  <div className="bg-white/10 backdrop-blur-md border border-brand-orange/40 rounded-2xl p-5 text-center shadow-lg hover:bg-white/15 transition-all flex flex-col justify-center">
+                    <div className="text-xl font-extrabold text-brand-orange mb-1">Govt Supported</div>
+                    <div className="text-xs text-gray-200 uppercase tracking-wider font-semibold">Scheme</div>
+                  </div>
+                  <div className="bg-[#FFB703]/10 backdrop-blur-md border border-[#FFB703]/40 rounded-2xl p-5 text-center shadow-lg hover:bg-[#FFB703]/20 transition-all flex flex-col justify-center">
+                    <div className="text-xl font-extrabold text-[#FFB703] mb-1">End-to-End</div>
+                    <div className="text-xs text-gray-200 uppercase tracking-wider font-semibold">Docs Assistance</div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 text-[11px] text-gray-400 italic bg-brand-navy/30 inline-block px-3 py-1.5 rounded-lg border border-white/5 shadow-inner">
+                  *Subsidy amount is subject to applicable Central and State Government policies and system capacity.
+                </div>
+
+                {/* Animated Credibility Counters */}
+                <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl md:text-3xl font-extrabold text-[#FFB703] mb-1">
+                        <Counter value={500} suffix="+" />
+                      </div>
+                      <div className="text-[10px] md:text-xs text-gray-300 font-semibold uppercase tracking-wider">Homes Consulted</div>
                     </div>
-                  )}
-                  
-                  <div className="flex flex-col justify-between flex-grow z-10">
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-3 pr-8 group-hover:text-[#FFB703] transition-colors">
-                        {promo.title}
-                      </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed mb-6 font-light">
-                        {promo.description}
-                      </p>
+                    <div className="text-center">
+                      <div className="text-2xl md:text-3xl font-extrabold text-brand-orange mb-1">
+                        <Counter value={100} suffix="%" />
+                      </div>
+                      <div className="text-[10px] md:text-xs text-gray-300 font-semibold uppercase tracking-wider">Docs Support</div>
                     </div>
-                    
-                    <div className="mt-auto">
-                      {promo.validUntil && (
-                        <div className="text-xs text-brand-orange/80 font-semibold mb-4 flex items-center gap-2">
-                           <div className="w-1.5 h-1.5 rounded-full bg-brand-orange animate-pulse" />
-                           Valid Until: {new Date(promo.validUntil).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                    <div className="text-center flex flex-col items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-[#FFB703]/20 flex items-center justify-center mb-1">
+                        <ShieldCheck className="w-4 h-4 text-[#FFB703]" />
+                      </div>
+                      <div className="text-[10px] md:text-xs text-gray-300 font-semibold uppercase tracking-wider leading-tight">Dedicated Solar<br/>Assistance Team</div>
+                    </div>
+                  </div>
+                </div>
+ 
+                <div className="bg-brand-navy/50 backdrop-blur-lg border border-white/10 rounded-2xl p-6 shadow-2xl">
+                  <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-[#FFB703]" />
+                    Active Subsidy Programs
+                  </h3>
+                  
+                  <div className="flex flex-col gap-4">
+                    {promotions.map((promo) => (
+                      <div 
+                        key={promo._id} 
+                        className="bg-white/5 border border-white/10 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:bg-white/10 hover:border-[#FFB703]/30 transition-all duration-300 group"
+                      >
+                        <div className="flex-1">
+                          <h4 className="text-base font-bold text-white mb-1 group-hover:text-[#FFB703] transition-colors flex items-center gap-2">
+                            {promo.title}
+                          </h4>
+                          <p className="text-xs text-gray-300 line-clamp-2 leading-relaxed">
+                            {promo.description}
+                          </p>
                         </div>
-                      )}
-                      
-                      {promo.ctaLink && (
-                        <a 
-                          href={promo.ctaLink} 
-                          className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-light text-white px-6 py-3 rounded-lg font-bold text-sm shadow-[0_0_15px_rgba(243,115,33,0.3)] hover:shadow-[0_0_25px_rgba(243,115,33,0.6)] hover:-translate-y-1 transition-all duration-300"
-                        >
-                          {promo.ctaText || 'Learn More'} <ArrowRight className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                </motion.div>
-              ))}
-            </motion.div>
+                </div>
+
+                {/* Stronger CTAs */}
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <Link prefetch={false} href="/contact" className="w-full sm:flex-1">
+                    <Button className="w-full bg-brand-orange text-white hover:bg-brand-orange/90 font-bold py-6 text-sm rounded-xl shadow-lg shadow-brand-orange/20 transition-all duration-300">
+                      Get Free Solar Consultation
+                    </Button>
+                  </Link>
+                  <Link prefetch={false} href="/contact" className="w-full sm:flex-1">
+                    <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/15 font-bold py-6 text-sm rounded-xl transition-all duration-300">
+                      Apply for Subsidy Assistance
+                    </Button>
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
           </div>
+
         </section>
       )}
 
@@ -524,19 +699,190 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
         </section>
       )}
 
-      {/* 6. PROJECTS & EXPERTISE */}
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
-        <div className="container mx-auto px-4 md:px-6">
+      {/* 6. OUR EXPERTISE */}
+      <section className="py-24 bg-gray-50 border-t border-gray-100 relative overflow-hidden">
+        {/* Soft background elements */}
+        <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-brand-orange/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-brand-orange font-semibold tracking-wider uppercase text-sm mb-4 block">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-brand-orange font-bold tracking-wider uppercase text-sm mb-4 block"
+            >
               Our Expertise
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-brand-navy">
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-5xl font-extrabold text-brand-navy tracking-tight"
+            >
               Solar EPC & Renewable Infrastructure
-            </h2>
-            <p className="text-gray-600 mt-4 text-lg">
-              Delivering high-yielding, robust, and cost-effective solar energy systems tailored to industrial and public utilities.
-            </p>
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-gray-600 mt-6 text-lg max-w-2xl mx-auto leading-relaxed"
+            >
+              Delivering high-yielding, robust, and cost-effective solar energy systems tailored to industrial, commercial, and public utilities.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 1. Rooftop Solar */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group flex flex-col"
+            >
+              <div className="h-56 w-full bg-gray-100 relative overflow-hidden">
+                <Image src="/expertise-rooftop.webp" alt="Residential Rooftop Solar Installation" fill sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Sun className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white tracking-wide">Rooftop Solar</h3>
+                </div>
+              </div>
+              <div className="p-6 flex-grow">
+                <p className="text-gray-600 leading-relaxed text-sm font-medium">
+                  Optimized rooftop solar installations for commercial buildings, manufacturing units, and government institutions with complete net-metering integration.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 2. Ground Mounted */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group flex flex-col"
+            >
+              <div className="h-56 w-full bg-gray-100 relative overflow-hidden">
+                <Image src="/expertise-ground-mounted.webp" alt="Ground Mounted Utility Scale Solar Farm" fill sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white tracking-wide">Ground Mounted</h3>
+                </div>
+              </div>
+              <div className="p-6 flex-grow">
+                <p className="text-gray-600 leading-relaxed text-sm font-medium">
+                  Utility-scale ground-mounted solar power plants with advanced tracking systems and high-efficiency modules for maximum energy yield.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 3. Industrial */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group flex flex-col"
+            >
+              <div className="h-56 w-full bg-gray-100 relative overflow-hidden">
+                <Image src="/expertise-industrial.webp" alt="Industrial Factory Rooftop Solar Installation" fill sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <FileText className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white tracking-wide">Industrial Solutions</h3>
+                </div>
+              </div>
+              <div className="p-6 flex-grow">
+                <p className="text-gray-600 leading-relaxed text-sm font-medium">
+                  Captive solar power generation for heavy industries, reducing operational OPEX and meeting corporate sustainability goals.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* 4. Solar EPC */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden group flex flex-col"
+            >
+              <div className="h-56 w-full bg-gray-100 relative overflow-hidden">
+                <Image src="/expertise-epc.webp" alt="Engineers Reviewing Solar EPC Project Plans" fill sizes="(max-width: 768px) 100vw, 25vw" loading="lazy" className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/90 via-brand-navy/20 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <div className="w-12 h-12 rounded-xl bg-brand-orange/90 backdrop-blur-md flex items-center justify-center text-white mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <Settings className="w-6 h-6 animate-spin-slow" style={{ animationDuration: '4s' }} />
+                  </div>
+                  <h3 className="text-xl font-bold text-white tracking-wide">Turnkey EPC</h3>
+                </div>
+              </div>
+              <div className="p-6 flex-grow">
+                <p className="text-gray-600 leading-relaxed text-sm font-medium">
+                  Full lifecycle engineering, procurement, and construction services ensuring robust execution from concept to commissioning.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. WHY CHOOSE SHIVOM SOLAR */}
+      <section className="py-24 bg-brand-navy text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2000')] opacity-[0.05] bg-cover bg-center mix-blend-luminosity" />
+        
+        {/* Animated gradients */}
+        <motion.div 
+          animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.1, 1], x: [0, 20, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-orange/20 rounded-full blur-[120px] pointer-events-none"
+        />
+        <motion.div 
+          animate={{ opacity: [0.1, 0.15, 0.1], scale: [1, 1.2, 1], y: [0, 30, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-blue/30 rounded-full blur-[100px] pointer-events-none"
+        />
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-brand-orange font-bold tracking-wider uppercase text-sm mb-4 block"
+            >
+              Why Choose Shivom Solar
+            </motion.span>
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight"
+            >
+              Scalable Renewable Infrastructure
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-gray-300 text-lg md:text-xl leading-relaxed font-light"
+            >
+              Our solar solutions are built to withstand challenging environments and deliver predictable outputs. By utilizing industry-leading Tier 1 solar modules and smart inverters, we maximize investment returns.
+            </motion.p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -545,14 +891,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white p-8 rounded-xl border border-gray-200/60 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 hover:border-brand-orange/30 hover:-translate-y-2 transition-all duration-500 group shadow-2xl"
             >
-              <div className="w-12 h-12 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue mb-6">
-                <Sun className="w-6 h-6 animate-spin" style={{ animationDuration: '12s' }} />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-orange to-[#FFB703] flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <ShieldCheck className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-brand-navy mb-4">Rooftop Solar</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Optimized rooftop solar installations for commercial buildings, manufacturing units, and government institutions with complete net-metering integration.
+              <h4 className="font-bold text-2xl mb-4 text-white group-hover:text-[#FFB703] transition-colors">Tier-1 Components</h4>
+              <p className="text-gray-300 text-justify-content font-light">
+                Strictly sourcing high-efficiency modules and certified mounting structures from globally recognized manufacturers.
               </p>
             </motion.div>
 
@@ -561,14 +907,14 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white p-8 rounded-xl border border-gray-200/60 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 hover:border-brand-blue/50 hover:-translate-y-2 transition-all duration-500 group shadow-2xl"
             >
-              <div className="w-12 h-12 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue mb-6">
-                <Settings className="w-6 h-6 animate-pulse" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-blue to-blue-400 flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                <Zap className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-brand-navy mb-4">Solar EPC</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Full lifecycle engineering, procurement, and construction services ensuring maximum energy yield, high durability, and low lifecycle maintenance.
+              <h4 className="font-bold text-2xl mb-4 text-white group-hover:text-blue-400 transition-colors">Grid Connectivity</h4>
+              <p className="text-gray-300 text-justify-content font-light">
+                Seamless coordination for net-metering approvals, regulatory compliance, and local DISCOM coordination.
               </p>
             </motion.div>
 
@@ -577,58 +923,16 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="bg-white p-8 rounded-xl border border-gray-200/60 shadow-sm hover:shadow-lg transition-all duration-300"
+              className="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 hover:border-emerald-400/50 hover:-translate-y-2 transition-all duration-500 group shadow-2xl"
             >
-              <div className="w-12 h-12 rounded-lg bg-brand-blue/10 flex items-center justify-center text-brand-blue mb-6">
-                <FileText className="w-6 h-6" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-400 flex items-center justify-center text-white mb-8 shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                <CheckCircle className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-brand-navy mb-4">Government Solar Execution</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Successful implementation of solar pumps, street lighting schemes, and grid-connected systems for municipalities and local administrative bodies.
+              <h4 className="font-bold text-2xl mb-4 text-white group-hover:text-emerald-400 transition-colors">Long-term Performance</h4>
+              <p className="text-gray-300 text-justify-content font-light">
+                Comprehensive Operation & Maintenance (O&M) and automated performance monitoring systems for maximum uptime.
               </p>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 7. WHY CHOOSE SHIVOM SOLAR */}
-      <section className="py-24 bg-brand-navy text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2000')] opacity-10 bg-cover bg-center mix-blend-luminosity" />
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Scalable Renewable Infrastructure</h2>
-            <p className="text-gray-300 text-lg leading-relaxed mb-12">
-              Our solar solutions are built to withstand challenging environments and deliver predictable outputs. By utilizing industry-leading Tier 1 solar modules and smart inverters, we maximize investment returns.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-left">
-              <div className="flex gap-4 items-start">
-                <div className="p-3 rounded-lg bg-white/10 text-brand-orange mt-1 flex-shrink-0">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl mb-1">Tier-1 Components</h4>
-                  <p className="text-sm text-gray-400">Strictly sourcing high-efficiency modules and certified mounting structures.</p>
-                </div>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="p-3 rounded-lg bg-white/10 text-brand-orange mt-1 flex-shrink-0">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl mb-1">Grid Connectivity</h4>
-                  <p className="text-sm text-gray-400">Seamless coordination for net-metering approvals and discom coordination.</p>
-                </div>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="p-3 rounded-lg bg-white/10 text-brand-orange mt-1 flex-shrink-0">
-                  <CheckCircle className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-xl mb-1">Long-term Performance</h4>
-                  <p className="text-sm text-gray-400">Comprehensive maintenance and automated performance monitoring systems.</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -664,6 +968,54 @@ export function SolarPageClient({ products, promotions, heroSlider }: SolarPageC
           </div>
         </div>
       </section>
+      {/* Interactive Gallery Lightbox Modal */}
+      <AnimatePresence>
+        {selectedGalleryImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedGalleryImage(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-navy/90 backdrop-blur-sm p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            >
+              <button
+                onClick={() => setSelectedGalleryImage(null)}
+                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/50 hover:bg-white backdrop-blur-md rounded-full flex items-center justify-center text-brand-navy transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange"
+              >
+                <X className="w-6 h-6" />
+              </button>
+              
+              <div className="relative w-full aspect-video bg-gray-100">
+                <Image
+                  src={selectedGalleryImage.image}
+                  alt={selectedGalleryImage.title}
+                  fill
+                  loading="lazy"
+                  className="object-cover"
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+              </div>
+              
+              <div className="p-6 md:p-8 bg-white flex items-center justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold text-brand-navy mb-2">{selectedGalleryImage.title}</h3>
+                  <p className="text-gray-600">Premium quality components for maximum efficiency and durability.</p>
+                </div>
+                <Button onClick={() => setSelectedGalleryImage(null)} variant="outline" className="hidden sm:flex">
+                  Close Gallery
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

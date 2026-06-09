@@ -60,7 +60,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <Image 
-            src="/logo.png" 
+            src="/logo.webp" 
             alt="Shivom Group Logo" 
             width={120} 
             height={110} 

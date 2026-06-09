@@ -27,7 +27,7 @@ export default async function EventsPage() {
               Latest Corporate News & Events
             </h2>
             <div className="w-24 h-1 bg-brand-orange mx-auto rounded-full mb-6" />
-            <p className="text-gray-600 text-lg leading-relaxed">
+            <p className="text-gray-600 text-lg text-justify-content">
               Stay up to date with the latest projects, community outreach, and technical advancements from the Shivom Group.
             </p>
           </div>

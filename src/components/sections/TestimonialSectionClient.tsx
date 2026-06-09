@@ -34,7 +34,7 @@ export function TestimonialSectionClient({ testimonials }: Props) {
           bulletClass: 'swiper-pagination-bullet bg-white/50',
           bulletActiveClass: 'swiper-pagination-bullet-active bg-brand-orange',
         }}
-        className="pb-16"
+        className="pb-16 min-h-[300px]"
       >
         {testimonials.map((item: ITestimonial) => (
           <SwiperSlide key={item._id}>

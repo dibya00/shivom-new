@@ -51,10 +51,10 @@ export default async function ProjectDetailPage({ params }: Props) {
           <div className="md:col-span-2">
             {project.featuredImage && (
               <div className="relative h-96 rounded-xl mb-8 overflow-hidden shadow-lg">
-                <Image src={project.featuredImage} alt={project.title} fill loading="lazy" className="object-cover" />
+                <Image src={project.featuredImage} alt={project.title} fill loading="lazy" className="object-cover"  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
               </div>
             )}
-            <div className="text-gray-600 leading-relaxed text-lg mb-6 prose max-w-none">
+            <div className="text-gray-600 text-justify-content text-lg mb-6 prose max-w-none">
               <p>{project.description || 'Detailed information is not available.'}</p>
             </div>
             
@@ -64,7 +64,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 <div className="grid grid-cols-2 gap-4">
                   {project.gallery.map((img, i) => (
                     <div key={i} className="relative h-48 rounded-lg overflow-hidden">
-                      <Image src={img} alt={`Gallery ${i+1}`} fill loading="lazy" className="object-cover" />
+                      <Image src={img} alt={`Gallery ${i+1}`} fill loading="lazy" className="object-cover"  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                     </div>
                   ))}
                 </div>

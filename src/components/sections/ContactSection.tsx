@@ -32,7 +32,13 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-1">Corporate Office</h4>
-                  <p className="text-gray-400">Bhubaneswar, Odisha, India</p>
+                  <p className="text-gray-400">
+                    <strong className="text-white block">Shivom Group</strong>
+                    2nd Floor, Plot No. 3200/14046<br />
+                    PS-Mancheswar, Puri Bypass Road<br />
+                    Rasulgarh, Bhubaneswar - 751010<br />
+                    Odisha, India
+                  </p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -40,8 +46,10 @@ export function ContactSection() {
                   <Phone className="w-5 h-5 text-brand-orange" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-semibold mb-1">Contact Numbers</h4>
-                  <p className="text-gray-400">+91 (123) 456-7890</p>
+                  <h4 className="text-lg font-semibold mb-1">Contact Number</h4>
+                  <a href="tel:+918895197406" className="text-gray-300 hover:text-white transition-colors block">
+                    +91 8895197406
+                  </a>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -50,7 +58,9 @@ export function ContactSection() {
                 </div>
                 <div>
                   <h4 className="text-lg font-semibold mb-1">Email Inquiry</h4>
-                  <p className="text-gray-400">info@shivomgroup.in</p>
+                  <a href="mailto:info@shivomgroup.in" className="text-gray-300 hover:text-white transition-colors block">
+                    info@shivomgroup.in
+                  </a>
                 </div>
               </div>
             </div>

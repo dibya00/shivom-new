@@ -34,7 +34,7 @@ export async function BlogSection() {
                   alt={blog.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-bold text-brand-navy uppercase tracking-wider shadow-sm">
                   {blog.category}
                 </div>

@@ -4,6 +4,7 @@ import QueryProvider from "@/providers/QueryProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContactButton } from "@/components/common/FloatingContactButton";
+import { FloatingHomeButton } from "@/components/ui/FloatingHomeButton";
 import { InitialLoader } from "@/components/common/InitialLoader";
 import Script from "next/script";
 import "./globals.css";
@@ -11,6 +12,8 @@ import "./globals.css";
 const epilogue = Epilogue({
   variable: "--font-epilogue",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -61,7 +64,7 @@ export default function RootLayout({
     "@type": "Corporation",
     "name": "Shivom Group",
     "url": "https://shivomgroup.in",
-    "logo": "https://shivomgroup.in/logo.png",
+    "logo": "https://shivomgroup.in/logo.webp",
     "description": "Premier infrastructure, renewable energy, and PSC pole manufacturing enterprise in Odisha.",
     "address": {
       "@type": "PostalAddress",
@@ -81,9 +84,9 @@ export default function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script id="google-analytics" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
@@ -103,6 +106,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <FloatingContactButton />
+          <FloatingHomeButton />
         </QueryProvider>
       </body>
     </html>

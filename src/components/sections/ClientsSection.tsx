@@ -36,7 +36,7 @@ export async function ClientsSection() {
             >
               {client.logo ? (
                 <div className="relative w-full h-full opacity-60 group-hover:opacity-100 transition-opacity">
-                  <Image loading="lazy" src={client.logo} alt={client.name} fill className="object-contain" />
+                  <Image loading="lazy" src={client.logo} alt={client.name} fill className="object-contain"  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                 </div>
               ) : (
                 <span className="font-bold text-gray-400 group-hover:text-brand-navy text-lg text-center transition-colors">
