@@ -1,3 +1,6 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { projectsService } from '@/services/projects.service';
 import Link from 'next/link';
@@ -6,29 +9,42 @@ import { ArrowUpRight } from 'lucide-react';
 import { ClientBrand } from '@/components/ui/ClientBrand';
 import { IProject } from '@/types';
 
-export const revalidate = 300; // Revalidate every 5 minutes
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState<IProject[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function ProjectsPage() {
-  const projects = await projectsService.getProjects();
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const data = await projectsService.getProjects();
+        setProjects(data);
+      } catch (error) {
+        console.error('[ProjectsPage] Error loading projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProjects();
+  }, []);
 
-  // Frontend Sorting Logic
-  const sortedProjects = [...projects].sort((a: IProject, b: IProject) => {
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    const dateA = new Date((a as any).createdAt || (a as any).projectDate || 0).getTime();
-    const dateB = new Date((b as any).createdAt || (b as any).projectDate || 0).getTime();
-    /* eslint-enable @typescript-eslint/no-explicit-any */
-    return dateB - dateA;
-  });
+  let projectGroups: any[] = [];
+  if (projects) {
+    const sortedProjects = [...projects].sort((a: IProject, b: IProject) => {
+      const dateA = new Date((a as any).createdAt || (a as any).projectDate || 0).getTime();
+      const dateB = new Date((b as any).createdAt || (b as any).projectDate || 0).getTime();
+      return dateB - dateA;
+    });
 
-  const ongoingProjects = sortedProjects.filter(p => p.category === 'Ongoing' || p.status === 'Ongoing');
-  const completedProjects = sortedProjects.filter(p => p.category === 'Completed' || p.status === 'Completed');
-  const clientProjects = sortedProjects.filter(p => !['Ongoing', 'Completed'].includes(p.category) && !['Ongoing', 'Completed'].includes(p.status || ''));
+    const ongoingProjects = sortedProjects.filter(p => p.category === 'Ongoing' || p.status === 'Ongoing');
+    const completedProjects = sortedProjects.filter(p => p.category === 'Completed' || p.status === 'Completed');
+    const clientProjects = sortedProjects.filter(p => !['Ongoing', 'Completed'].includes(p.category) && !['Ongoing', 'Completed'].includes(p.status || ''));
 
-  const projectGroups = [
-    { title: 'Ongoing Projects', items: ongoingProjects, badgeColor: 'bg-blue-100 text-blue-800' },
-    { title: 'Completed Projects', items: completedProjects, badgeColor: 'bg-green-100 text-green-800' },
-    { title: 'Client Projects', items: clientProjects, badgeColor: 'bg-purple-100 text-purple-800' },
-  ].filter(group => group.items.length > 0);
+    projectGroups = [
+      { title: 'Ongoing Projects', items: ongoingProjects, badgeColor: 'bg-blue-100 text-blue-800' },
+      { title: 'Completed Projects', items: completedProjects, badgeColor: 'bg-green-100 text-green-800' },
+      { title: 'Client Projects', items: clientProjects, badgeColor: 'bg-purple-100 text-purple-800' },
+    ].filter(group => group.items.length > 0);
+  }
 
   return (
     <>
@@ -52,7 +68,13 @@ export default async function ProjectsPage() {
             </p>
           </div>
 
-          {projects.length === 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-pulse">
+              {[1, 2, 3].map(n => (
+                <div key={n} className="bg-white rounded-2xl h-96 border border-gray-100" />
+              ))}
+            </div>
+          ) : !projects || projects.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
               <p className="text-gray-500 text-lg font-medium">No projects found. Check back soon!</p>
             </div>
@@ -67,7 +89,7 @@ export default async function ProjectsPage() {
                     </span>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {group.items.map(project => (
+                    {group.items.map((project: IProject) => (
                       <div 
                         key={project._id} 
                         className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col h-full"
@@ -79,7 +101,8 @@ export default async function ProjectsPage() {
                             fill
                             loading="lazy"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
-                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
                           <div className="absolute top-4 left-4 bg-brand-navy/90 text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">
                             {project.category}
                           </div>

@@ -1,24 +1,13 @@
-export const revalidate = 300;
+'use client';
 
 import { DivisionHeroSlider } from '@/components/sections/DivisionHeroSlider';
 import Image from 'next/image';
 import { Zap, ShieldCheck, Cpu, CheckCircle, HardHat, Landmark, Network, Phone } from 'lucide-react';
 
-export default async function EnterprisePage() {
-  const fallbackSlides = [
-    {
-      _id: 'enterprise-fallback-1',
-      image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=2000&auto=format&fit=crop',
-      title: 'Shivom Enterprise',
-      subtitle: 'Engineering, Procurement, and Construction (EPC) electrification grids across Odisha.',
-      buttonText: 'Request Consultation',
-      buttonLink: '/contact'
-    }
-  ];
-
+export default function EnterprisePage() {
   return (
     <>
-      <DivisionHeroSlider websiteKey="enterprise" fallbackSlides={fallbackSlides} />
+      <DivisionHeroSlider websiteKey="enterprise" />
       
       {/* Overview Section */}
       <section className="py-24 bg-white">

@@ -1,3 +1,6 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { PageBanner } from '@/components/layout/PageBanner';
 import { eventsService } from '@/services/events.service';
 import Link from 'next/link';
@@ -5,10 +8,23 @@ import Image from 'next/image';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { IEvent } from '@/types';
 
-export const revalidate = 300;
+export default function EventsPage() {
+  const [events, setEvents] = useState<IEvent[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function EventsPage() {
-  const events = await eventsService.getEvents();
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const data = await eventsService.getEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error('[EventsPage] Error loading events:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadEvents();
+  }, []);
 
   return (
     <>
@@ -32,7 +48,13 @@ export default async function EventsPage() {
             </p>
           </div>
 
-          {events.length === 0 ? (
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-pulse">
+              {[1, 2, 3].map(n => (
+                <div key={n} className="bg-gray-200 rounded-2xl h-[450px] border border-gray-150" />
+              ))}
+            </div>
+          ) : !events || events.length === 0 ? (
             <div className="text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
               <p className="text-gray-500 text-lg font-medium">No events currently scheduled.</p>
             </div>

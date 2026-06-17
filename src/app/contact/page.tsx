@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { useSubmitContact } from '@/hooks/useContact';
-import { 
-  Phone, 
-  Mail, 
-  Globe, 
-  Building, 
-  CheckCircle2, 
-  AlertCircle, 
-  Loader2 
+import {
+  Phone,
+  Mail,
+  Globe,
+  Building,
+  CheckCircle2,
+  AlertCircle,
+  Loader2
 } from 'lucide-react';
 import { fadeUp, staggerContainer } from '@/lib/animations';
 
@@ -154,7 +154,7 @@ export default function ContactPage() {
               "addressCountry": "IN"
             },
             "telephone": "+91 8895865734",
-            "email": "info@shivomgroup.in",
+            "email": "projects@shivomgroup.in",
             "url": "https://shivomgroup.in",
             "contactPoint": [
               {
@@ -190,9 +190,9 @@ export default function ContactPage() {
         }}
       />
       {/* SECTION 1: PAGE BANNER */}
-      <PageBanner 
-        title="Contact Shivom Group" 
-        subtitle="Let's Build Infrastructure Together" 
+      <PageBanner
+        title="Contact Shivom Group"
+        subtitle="Let's Build Infrastructure Together"
         breadcrumb="Contact"
         bgImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000"
       />
@@ -200,7 +200,7 @@ export default function ContactPage() {
       {/* Main Content Grid: Info & Form */}
       <section id="contact-form-section" className="py-24 bg-gray-50/50">
         <div className="container mx-auto px-4 md:px-6">
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"
             variants={staggerContainer}
             initial="hidden"
@@ -244,7 +244,7 @@ export default function ContactPage() {
               {/* Quick Contact Details */}
               <div className="bg-brand-navy rounded-xl p-8 text-white space-y-6">
                 <h3 className="text-xl font-bold text-brand-orange mb-4">Direct Details</h3>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
                     <Phone className="w-5 h-5 text-brand-orange" />
@@ -263,8 +263,8 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <span className="text-xs text-gray-400 block font-semibold uppercase tracking-wider">Email</span>
-                    <a href="mailto:info@shivomgroup.in" className="text-white hover:text-brand-orange-light transition-colors font-medium">
-                      info@shivomgroup.in
+                    <a href="mailto:projects@shivomgroup.in" className="text-white hover:text-brand-orange-light transition-colors font-medium">
+                      projects@shivomgroup.in
                     </a>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export default function ContactPage() {
                   <div>
                     <span className="text-xs text-gray-400 block font-semibold uppercase tracking-wider">Website</span>
                     <a href="https://shivomgroup.in" target="_blank" rel="noopener noreferrer" className="text-white hover:text-brand-orange-light transition-colors font-medium">
-                      https://shivomgroup.in
+                      shivomgroup.in
                     </a>
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export default function ContactPage() {
                 <p className="text-gray-500 text-sm mb-8">Please fill in the details below. Our corporate executives will reach back to you within 24 business hours.</p>
 
                 {submitStatus === 'success' && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-6 p-6 bg-green-50 border border-green-200 rounded-xl text-green-800 flex gap-3 items-start"
@@ -304,7 +304,7 @@ export default function ContactPage() {
                 )}
 
                 {submitStatus === 'error' && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-6 p-6 bg-red-50 border border-red-200 rounded-xl text-red-800 flex gap-3 items-start"
@@ -321,9 +321,9 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="contact-name-input" className="text-sm font-semibold text-brand-navy">Full Name</label>
-                      <Input 
+                      <Input
                         id="contact-name-input"
-                        name="name" 
+                        name="name"
                         value={formData.name}
                         onChange={handleInputChange}
                         error={errors.name}
@@ -334,9 +334,9 @@ export default function ContactPage() {
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="contact-email-input" className="text-sm font-semibold text-brand-navy">Email Address</label>
-                      <Input 
+                      <Input
                         id="contact-email-input"
-                        name="email" 
+                        name="email"
                         type="email"
                         value={formData.email}
                         onChange={handleInputChange}
@@ -351,9 +351,9 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="contact-phone-input" className="text-sm font-semibold text-brand-navy">Phone Number</label>
-                      <Input 
+                      <Input
                         id="contact-phone-input"
-                        name="phone" 
+                        name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
                         error={errors.phone}
@@ -364,9 +364,9 @@ export default function ContactPage() {
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label htmlFor="contact-subject-input" className="text-sm font-semibold text-brand-navy">Subject</label>
-                      <Input 
+                      <Input
                         id="contact-subject-input"
-                        name="subject" 
+                        name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
                         error={errors.subject}
@@ -379,9 +379,9 @@ export default function ContactPage() {
 
                   <div className="flex flex-col gap-1.5">
                     <label htmlFor="contact-message-input" className="text-sm font-semibold text-brand-navy">Message Details</label>
-                    <Textarea 
+                    <Textarea
                       id="contact-message-input"
-                      name="message" 
+                      name="message"
                       value={formData.message}
                       onChange={handleInputChange}
                       error={errors.message}
@@ -392,10 +392,10 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    className="w-full flex items-center justify-center gap-2" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    className="w-full flex items-center justify-center gap-2"
+                    size="lg"
                     disabled={isPending}
                   >
                     {isPending ? (
@@ -411,31 +411,50 @@ export default function ContactPage() {
               </div>
 
               {/* Map Section */}
-              <div className="bg-white rounded-2xl p-8 md:p-10 shadow-lg border border-gray-100 space-y-6">
-                <div className="text-center mb-6">
-                  <span className="text-brand-orange uppercase tracking-wider text-xs font-semibold block">
-                    Our Location
-                  </span>
-                  <h2 className="text-3xl font-bold text-brand-navy mt-2">
-                    Visit Our Office
-                  </h2>
-                  <p className="text-gray-600 mt-4 text-sm leading-relaxed">
-                    Meet our team at our Bhubaneswar office for consultations regarding solar energy, EPC infrastructure projects, PSC pole manufacturing, and utility solutions.
-                  </p>
-                </div>
+              <div className="relative overflow-hidden rounded-2xl shadow-lg border border-gray-100 group h-[450px] md:h-[600px] lg:h-[700px]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.0620862080766!2d85.8717082!3d20.3043945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a190b00184901a3%3A0xe86721d0e918f5c2!2sShivom+Group!5e0!3m2!1sen!2sin!4v1718100000000!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen={true}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full transition-all duration-500"
+                  title="Shivom Group Location Map Rasulgarh Bhubaneswar Odisha"
+                />
 
-                <div className="overflow-hidden rounded-2xl shadow-lg border border-gray-150 h-[320px] md:h-[400px] lg:h-[450px]">
-                  <iframe
-                    src="https://www.google.com/maps?q=SHIVOM+SOLAR+SOLUTIONS+Rasulgarh+Bhubaneswar+Odisha+751010&output=embed"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen={true}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="w-full h-full grayscale opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
-                    title="SHIVOM SOLAR SOLUTIONS Location Map Rasulgarh Bhubaneswar Odisha"
-                  />
+                {/* Floating Contact Card */}
+                <div className="absolute top-4 left-4 right-4 md:right-auto md:w-80 bg-white/95 backdrop-blur-md p-6 rounded-xl shadow-xl border border-gray-100/50 transition-all duration-300 group-hover:shadow-2xl">
+                  <div className="flex flex-col gap-3">
+                    <div>
+                      <h4 className="text-lg font-bold text-brand-navy flex items-center gap-2">
+                        <Building className="w-5 h-5 text-brand-orange shrink-0" />
+                        <span>Shivom Group</span>
+                      </h4>
+                      <p className="text-gray-600 text-xs mt-2 leading-relaxed">
+                        Plot No. 3200/14046, Rasulgarh, Bhubaneswar, Odisha 751010
+                      </p>
+                    </div>
+
+                    <div className="border-t border-gray-100 my-1" />
+
+                    <div className="flex items-center gap-2 text-xs text-gray-650">
+                      <Phone className="w-4 h-4 text-brand-orange shrink-0" />
+                      <a href="tel:+918895865734" className="hover:text-brand-orange transition-colors font-medium">
+                        +91 88958 65734
+                      </a>
+                    </div>
+
+                    <a
+                      href="https://www.google.com/maps/dir/?api=1&destination=Shivom+Group&destination_place_id=ChIJowFJEABLGToRwvUY6dAhZ-g"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-orange hover:bg-brand-orange-light text-white text-xs font-bold rounded-lg transition-all shadow-md hover:shadow-lg text-center"
+                    >
+                      Get Directions
+                    </a>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -468,8 +487,8 @@ export default function ContactPage() {
                 <h3 className="text-xl font-bold text-brand-navy mb-1">Mr. Debendra Kumar Mishra</h3>
                 <p className="text-gray-500 text-sm font-semibold mb-6">Manager (Solar)</p>
               </div>
-              <a 
-                href="tel:+918895197406" 
+              <a
+                href="tel:+918895197406"
                 className="flex items-center justify-center gap-2 bg-brand-navy text-white hover:bg-brand-orange hover:text-white transition-colors py-3 px-4 rounded-xl font-semibold text-sm cursor-pointer"
               >
                 <Phone className="w-4 h-4" />
@@ -486,8 +505,8 @@ export default function ContactPage() {
                 <h3 className="text-xl font-bold text-brand-navy mb-1">Mr. Manoranjan Bal</h3>
                 <p className="text-gray-500 text-sm font-semibold mb-6">Project Manager</p>
               </div>
-              <a 
-                href="tel:+917504929429" 
+              <a
+                href="tel:+917504929429"
                 className="flex items-center justify-center gap-2 bg-brand-navy text-white hover:bg-brand-orange hover:text-white transition-colors py-3 px-4 rounded-xl font-semibold text-sm cursor-pointer"
               >
                 <Phone className="w-4 h-4" />
@@ -504,8 +523,8 @@ export default function ContactPage() {
                 <h3 className="text-xl font-bold text-brand-navy mb-1">Mr. Sunil Kumar Nayak</h3>
                 <p className="text-gray-500 text-sm font-semibold mb-6">Manager</p>
               </div>
-              <a 
-                href="tel:+916204929709" 
+              <a
+                href="tel:+916204929709"
                 className="flex items-center justify-center gap-2 bg-brand-navy text-white hover:bg-brand-orange hover:text-white transition-colors py-3 px-4 rounded-xl font-semibold text-sm cursor-pointer"
               >
                 <Phone className="w-4 h-4" />
@@ -523,15 +542,15 @@ export default function ContactPage() {
                 <p className="text-gray-500 text-sm font-semibold mb-6">HR & Accounts Manager</p>
               </div>
               <div className="flex flex-col gap-2">
-                <a 
-                  href="tel:+918895865734" 
+                <a
+                  href="tel:+918895865734"
                   className="flex items-center justify-center gap-2 bg-brand-navy text-white hover:bg-brand-orange hover:text-white transition-colors py-2.5 px-4 rounded-xl font-semibold text-xs md:text-sm cursor-pointer"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>+91 88958 65734</span>
                 </a>
-                <a 
-                  href="mailto:hr@shivomgroup.in" 
+                <a
+                  href="mailto:hr@shivomgroup.in"
                   className="flex items-center justify-center gap-2 bg-brand-navy text-white hover:bg-brand-orange hover:text-white transition-colors py-2.5 px-4 rounded-xl font-semibold text-xs md:text-sm cursor-pointer"
                 >
                   <Mail className="w-3.5 h-3.5" />
@@ -559,9 +578,9 @@ export default function ContactPage() {
             <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
               Our technical experts are ready to collaborate on utility and custom infrastructure project blueprints.
             </p>
-            <Button 
-              onClick={scrollToForm} 
-              variant="primary" 
+            <Button
+              onClick={scrollToForm}
+              variant="primary"
               size="lg"
               className="bg-brand-orange hover:bg-brand-orange-light hover:scale-105 active:scale-95 transition-all text-white px-8"
             >

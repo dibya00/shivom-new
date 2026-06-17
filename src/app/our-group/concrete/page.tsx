@@ -1,24 +1,13 @@
-export const revalidate = 300;
+'use client';
 
 import { DivisionHeroSlider } from '@/components/sections/DivisionHeroSlider';
 import Image from 'next/image';
 import { Factory, ShieldCheck, Award, Settings, Layers, Phone } from 'lucide-react';
 
-export default async function ConcretePage() {
-  const fallbackSlides = [
-    {
-      _id: 'concrete-fallback-1',
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop',
-      title: 'Shivom Concrete Products',
-      subtitle: 'Manufacturing high-strength pre-stressed cement concrete (PSC) poles and structures.',
-      buttonText: 'Request Consultation',
-      buttonLink: '/contact'
-    }
-  ];
-
+export default function ConcretePage() {
   return (
     <>
-      <DivisionHeroSlider websiteKey="concrete" fallbackSlides={fallbackSlides} />
+      <DivisionHeroSlider websiteKey="concrete" />
       
       {/* Overview Section */}
       <section className="py-24 bg-white">

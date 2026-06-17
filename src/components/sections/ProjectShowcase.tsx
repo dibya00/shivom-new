@@ -1,3 +1,6 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import { projectsService } from '@/services/projects.service';
 import { SectionHeading } from '../ui/SectionHeading';
 import { ArrowUpRight } from 'lucide-react';
@@ -6,16 +9,40 @@ import Image from 'next/image';
 import { IProject } from '@/types';
 import { ClientBrand } from '../ui/ClientBrand';
 
-export async function ProjectShowcase() {
-  let projects: IProject[] = [];
+export function ProjectShowcase() {
+  const [projects, setProjects] = useState<IProject[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  try {
-    projects = await projectsService.getFeaturedProjects();
-  } catch {
-    // Return null on API failure
+  useEffect(() => {
+    async function loadProjects() {
+      try {
+        const fetched = await projectsService.getFeaturedProjects();
+        setProjects(fetched);
+      } catch (error) {
+        console.error('[ProjectShowcase] Error fetching projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-24 bg-gray-50 animate-pulse">
+        <div className="container mx-auto px-4 md:px-6">
+          <SectionHeading title="Featured Projects" subtitle="Our Portfolio" />
+          <div className="grid grid-cols-1 md:grid-cols-3 auto-rows-[250px] gap-4 md:gap-6 mt-16">
+            {[1, 2, 3, 4].map(n => (
+              <div key={n} className="bg-gray-200 rounded-xl" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
   }
 
-  if (projects.length === 0) return null;
+  if (!projects || projects.length === 0) return null;
 
   return (
     <section className="py-24 bg-gray-50">
@@ -42,7 +69,8 @@ export async function ProjectShowcase() {
                     alt={project.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
-                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
                   <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex items-end justify-between z-10">

@@ -41,6 +41,8 @@ export interface ISlider {
   image: string;
   mobileImage?: string;
   order: number;
+  status?: string;
+  isActive?: boolean;
 }
 
 export interface IProject {

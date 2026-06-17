@@ -5,9 +5,11 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContactButton } from "@/components/common/FloatingContactButton";
 import { FloatingHomeButton } from "@/components/ui/FloatingHomeButton";
-import { InitialLoader } from "@/components/common/InitialLoader";
+import dynamic from "next/dynamic";
 import Script from "next/script";
 import "./globals.css";
+
+const InitialLoader = dynamic(() => import("@/components/common/InitialLoader").then(mod => mod.InitialLoader));
 
 const epilogue = Epilogue({
   variable: "--font-epilogue",
@@ -78,6 +80,10 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`${epilogue.variable} antialiased scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://apishivom.visital.co.in" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://apishivom.visital.co.in" />
+      </head>
       <body className="min-h-screen flex flex-col font-sans">
         <InitialLoader />
         {gaId && (

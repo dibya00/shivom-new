@@ -60,6 +60,7 @@ export function Footer() {
                 { label: 'Awards & Certifications', href: '/awards-certifications' },
                 { label: 'Projects', href: '/projects' },
                 { label: 'Events', href: '/events' },
+                { label: 'Blogs', href: '/blogs' },
                 { label: 'Careers', href: '/careers' },
                 { label: 'Contact Us', href: '/contact' },
               ].map(link => (
