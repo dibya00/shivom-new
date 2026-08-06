@@ -17,17 +17,24 @@ export const resolveImageUrl = (path: string | undefined | null, fallback: strin
   return path;
 };
 
-export const transformSlider = (data: Partial<ISlider>): ISlider => ({
-  _id: data._id || Math.random().toString(),
-  title: data.title || '',
-  subtitle: data.subtitle || '',
-  description: data.description || '',
-  buttonText: data.buttonText || '',
-  buttonLink: data.buttonLink || '',
-  image: resolveImageUrl(data.image, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'),
-  mobileImage: resolveImageUrl(data.mobileImage || data.image, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'),
-  order: data.order || 0,
-});
+export const transformSlider = (data: Partial<ISlider>): ISlider => {
+  const transformed = {
+    _id: data._id || Math.random().toString(),
+    title: data.title || '',
+    subtitle: data.subtitle || '',
+    description: data.description || '',
+    buttonText: data.buttonText || '',
+    buttonLink: data.buttonLink || '',
+    image: resolveImageUrl(data.image, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'),
+    mobileImage: resolveImageUrl(data.mobileImage || data.image, 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800'),
+    order: data.order || 0,
+    status: data.status || 'active',
+    isActive: data.isActive !== undefined ? data.isActive : data.status !== 'inactive',
+  };
+  console.log("API Image:", data.image);
+  console.log("Transformed Image:", transformed.image);
+  return transformed;
+};
 
 export const transformProject = (data: Partial<IProject>): IProject => {
   const defaultImg = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=800';
